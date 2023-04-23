@@ -63,6 +63,7 @@ import ViewApplications from './pages/Warden/ViewApplications';
 import FacultySignUp from './pages/FacultySignUp'
 import Athira from './pages/Athira';
 import ApplyMessout from './pages/Student/ApplyMessout';
+import MessManagementWarden from './pages/Warden/MessManagement';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -79,40 +80,40 @@ function App() {
   */
 
   useEffect(() => {
-    // setUser(
-    //     {
-    //         user_id: '1',
-    //         password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
-    //         name: 'nadeem',
-    //         email: 'nadeemblayparambil@gmail.com',
-    //         mobile_no: '773607084',
-    //         designation: 'faculty',
-    //         is_admin: true,
-    //         roles: [ 'admin','HOD','WD','SA' ]
-    //       }
-    // )
-    setAuthenticating(true)
-    setLoading(true)
-    console.log("Im inside useffect isauthenticated")
-    axios.get('http://localhost:8080/auth/isAuthenticated',{
-        withCredentials: true
-    })
-    .then(function (response) {
+    setUser(
+        {
+            user_id: '1',
+            password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
+            name: 'nadeem',
+            email: 'nadeemblayparambil@gmail.com',
+            mobile_no: '773607084',
+            designation: 'faculty',
+            is_admin: true,
+            roles: [ 'admin','HOD','WD','SA' ]
+          }
+    )
+    // setAuthenticating(true)
+    // setLoading(true)
+    // console.log("Im inside useffect isauthenticated")
+    // axios.get('http://localhost:8080/auth/isAuthenticated',{
+    //     withCredentials: true
+    // })
+    // .then(function (response) {
 
-        setAuthenticating(false)
-        setLoading(false)
+    //     setAuthenticating(false)
+    //     setLoading(false)
 
-        console.log("success" , response ,"response.data");
-        if(response.data!="")
-          setUser(response.data)
-        else 
-          setUser(null)
-    })
-    .catch(function (error) {
-        setAuthenticating(false)
-        setLoading(false)
-        console.log("FAILED!!! ",error);
-    });
+    //     console.log("success" , response ,"response.data");
+    //     if(response.data!="")
+    //       setUser(response.data)
+    //     else 
+    //       setUser(null)
+    // })
+    // .catch(function (error) {
+    //     setAuthenticating(false)
+    //     setLoading(false)
+    //     console.log("FAILED!!! ",error);
+    // });
   }, [])
   
   return (
@@ -164,6 +165,7 @@ function App() {
               <Route path="admission" element={<HostelAdmission/>}/>
               <Route path="hostelregistry" element={<HostelRegistry/>}/>
               <Route path="applications" element={<ViewApplications/>}/>
+              <Route path="messmanagement" element={<MessManagementWarden/>}/>
             </Route>
 
             <Route path="/SG" element={<SergeantHome/>}>

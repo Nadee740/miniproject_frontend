@@ -7,6 +7,7 @@ import ConfirmDialog from '../components/ConfirmDialog'
 function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,setNoofDays}) {
 
   const {user,setLoading}=useContext(UserContext)
+
   const [open1, setOpen1] = useState(false);
   const [modalHeading,setModalHeading]=useState("")
   const [modalText,setModalText]=useState("")
@@ -16,6 +17,7 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
   const [tempto,setTempTo]=useState("")
   useEffect(() => {
     setLoading(true)
+
     axios.get('http://localhost:8080/inmate/messoutdays')
         .then((res)=>{
           console.log(res.data)
@@ -90,10 +92,19 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
                    <th className='p-3'></th>
                  </tr>
                  {messOutHistory.map((user, index)=>{
+                    var active=false;
                    var fdate=new Date(user.fromdate)
-                   var tdate=new Date(user.todate)
+                   if(user.todate!=null)
+                   { 
+                    var tdate=new Date(user.todate)                 
+                    var actualtdate=tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()
+                    }
+                   
+                   else{
+                   active=true
+                   }
                    var actualfdate=fdate.getDate()+'/'+(fdate.getMonth()+1)+'/'+fdate.getFullYear()
-                   var actualtdate=tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()
+
                    return(
                     <tr 
                       key={index}
@@ -101,11 +112,12 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
                     >
                       <td className='p-3'>{index+1}</td>
                       <td className='p-3'>{actualfdate}</td>
-                      <td className='p-3'>{actualtdate}</td>
-                      <td className='p-3'>{((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24))+1}</td>
-                      <td className='p-3'>{today()<tdate.getTime()?<button className="submit-button-black" onClick={()=>{cancelPress(fdate,tdate,user.fromdate,user.tdate)}}>Cancel</button>:''}</td>
+                      <td className='p-3'>{!active?actualtdate:""}</td>
+                      <td className='p-3'>{!active?((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24))+1:""}</td>
+                      {/* <td className='p-3'>{today()<tdate.getTime()?<button className="submit-button-black" onClick={()=>{cancelPress(fdate,tdate,user.fromdate,user.tdate)}}>Cancel</button>:''}</td> */}
                     </tr>
-                 )})}
+                 )
+                 active=false})}
              </table>}
            </div>
            <ConfirmDialog open={open1} setOpen={setOpen1} modalHeading={modalHeading} modalText={modalText} confirmFunction={()=>{cancelMessOut(cancelFromDate,cancelToDate)}}/>
