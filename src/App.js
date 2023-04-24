@@ -165,7 +165,7 @@ function App() {
               <Route path="admission" element={<HostelAdmission/>}/>
               <Route path="hostelregistry" element={<HostelRegistry/>}/>
               <Route path="applications" element={<ViewApplications/>}/>
-              <Route path="messmanagement" element={<MessManagementWarden/>}/>
+              <Route path="messmanagement" element={<MessSecretary/>}/>
             </Route>
 
             <Route path="/SG" element={<SergeantHome/>}>

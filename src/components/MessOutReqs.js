@@ -4,11 +4,12 @@ import CheckIcon from '@mui/icons-material/Check';
 import axios from "axios";
 import { baseUrl } from '../baseUrl'
 import {UserContext} from '../Contexts/UserContext'
-function MessOutReqs({noofDays,setNoofDays}) {
+function MessOutReqs({noofDays,setNoofDays,maxNoofDays,setMaxNoofDays}) {
 
      const [messreqs, setMessreqs] = useState([])
      const [tabSelected, setTabSelected] = useState(1)
      const [isEdit,setIsEdit]=useState(false)
+     const [isMaxEdit,setIsMaxEdit]=useState(false)
      const {setLoading}=useContext(UserContext)
 
      useEffect(() => {
@@ -32,6 +33,20 @@ function MessOutReqs({noofDays,setNoofDays}) {
          console.log(res)
        })
      }
+
+     const submitMaximumNoofDays=(e)=>{
+       e.preventDefault();
+       setIsMaxEdit(!isMaxEdit);
+       axios.put(`${baseUrl}/inmate/messoutmaximumdays`,{
+        noofDays:maxNoofDays
+      })
+      .then((res)=>{
+        console.log(res)
+      })
+
+     }
+
+    
        return (
          <>
            <div className='w-11/12'>
@@ -42,6 +57,14 @@ function MessOutReqs({noofDays,setNoofDays}) {
                 </p>
                 {!isEdit?<button className="submit-button-black ml-5" onClick={()=>{setIsEdit(!isEdit)}}><EditIcon/> Edit</button>:
                 <button className="submit-button-black text-sm ml-5" onClick={submitHandler}><CheckIcon className="text-sm"/> Confirm</button>}
+             </div>
+             <div className="flex items-center mt-5 mb-5">
+                <p className="font-semibold">Maximum Number of Days for Mess Out: 
+                  {isMaxEdit?<input type="number" min="1" max="100" className="border-solid border-2 rounded-lg ml-3 p-1 w-20" 
+                    value={maxNoofDays} onChange={(e)=>{setMaxNoofDays(e.target.value)}}/>:<span className="ml-3">{maxNoofDays}</span>}
+                </p>
+                {!isMaxEdit?<button className="submit-button-black ml-5" onClick={()=>{setIsMaxEdit(!isMaxEdit)}}><EditIcon/> Edit</button>:
+                <button className="submit-button-black text-sm ml-5" onClick={submitMaximumNoofDays}><CheckIcon className="text-sm"/> Confirm</button>}
              </div>
              <h2 className="text-black font-semibold text-lg mt-5 mb-3">Mess Out Requests</h2>
              <table className='w-full relative table-auto'>

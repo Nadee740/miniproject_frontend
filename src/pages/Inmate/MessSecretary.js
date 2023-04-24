@@ -9,12 +9,17 @@ function MessSecretary() {
 
   const [tabSelected, setTabSelected] = useState(1)
   const [noofDays,setNoofDays]=useState(0)
+  const [maxNoofDays,setMaxNoofDays]=useState(null)
   const [inmates, setInmates] = useState([])
 
   useEffect(() => {
     axios.get('http://localhost:8080/inmate/messoutdays')
     .then((res)=>{
       setNoofDays(res.data[0].value)
+    })
+    axios.get('http://localhost:8080/inmate/maximum-messoutdays')
+    .then((res)=>{
+      setMaxNoofDays(res.data[0].value)
     })
   }, [])
 
@@ -23,7 +28,7 @@ function MessSecretary() {
   return (
     <div className='flex flex-col w-full items-center min-h-screen h-full overflow-y-scroll'>
       <div className='flex flex-row justify-between w-11/12 pt-4 items-center'>
-        <div className='text-xl font-bold'>Mess Secretary</div>
+        <div className='text-xl font-bold'>Mess Management</div>
         <div className='flex flex-row space-x-4 items-center'>
             <div className='bg-white border rounded-full w-10 aspect-square'/>
             <div>user Name</div>
@@ -58,7 +63,7 @@ function MessSecretary() {
           {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>}
           <br />
         </div>
-        {tabSelected===1?<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>:<MessOutReqs noofDays={noofDays} setNoofDays={setNoofDays}/>}
+        {tabSelected===1?<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>:<MessOutReqs maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays}/>}
       </motion.div>
     </div>
   )
