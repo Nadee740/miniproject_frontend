@@ -1,21 +1,68 @@
 import axios from 'axios'
-import { useEffect,useContext } from 'react'
+import { useEffect,useContext, useState } from 'react'
 import { baseUrl } from '../baseUrl'
 import {UserContext} from '../Contexts/UserContext'
 const CurrentMessInmates = (props)=>{
-  const {setLoading} = useContext(UserContext)
+    const {user,setLoading} = useContext(UserContext)
+    var date = new Date();
+    var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
+    const [selectedDate, setSelectedDate] = useState(dateFormat);
+    const[selectedHostel,setSelectedHostel]=useState();
  
   useEffect(() => {
+    if(window.location.href.includes('messsec'))
+    {
+        setSelectedHostel(user.hostel)
+    }
     setLoading(true)
-    axios.get(`${baseUrl}/inmate/viewmessinmates`)
+    axios.get(`${baseUrl}/inmate/viewmessinmates?date=${selectedDate}&&hostel=${selectedHostel}`)
     .then(res=>{
       console.log(res.data)
       props.setInmates(res.data)
       setLoading(false)
     })
-  }, [])
+  }, [selectedHostel,selectedDate])
     
     return(
+     <>
+         <div className="flex items-center justify-between w-4/12 p">
+          {user.stage=="inmate"?<select
+            className="p-3 ring-slate-200 ring-2 rounded-xl outline-none"
+          >
+            <option >{user.hostel==="MH"?'Mens Hostel':'Ladies Hostel'}</option>
+          </select>:<select
+          defaultValue={selectedHostel}
+            onChange={(e) => {
+              setSelectedHostel(e.target.value);
+            }}
+            className="p-3 ring-slate-200 ring-2 rounded-xl outline-none"
+          >
+            <option value="MH">Mens Hostel</option>
+            <option value="LH">Ladies Hostel</option>
+          </select>}
+          {/* <select className='p-3 ring-slate-200 ring-2 rounded-xl outline-none'>
+            <option value="firstyear">First Year</option>
+            <option value="secondyear">Second Year</option>
+            <option value="thirdyear">Third Year</option>
+            <option value="fourthyear">Fourth Year</option>
+      </select>  */}
+        </div>
+        <div className="flex items-center justify-between w-4/12 py-4">
+    
+          <p className="font-semibold">Select Date </p>
+          <input
+           defaultValue={selectedDate}
+            onChange={(e) => {
+               
+              setSelectedDate(e.target.value);
+            }}
+            type="date"
+          ></input>
+        </div>
+        <div className="flex items-center justify-between w-4/12 py-4">
+          <p className="font-semibold">No Of Requests :</p>
+          <p className="font-semibold">{props.inmates.length} </p>
+        </div>
         <table className='w-11/12 relative table-auto'>
               <tr className='rounded-xl p-3 bg-primary text-center'>
                 <th className='p-3'>Sl.No</th>
@@ -35,6 +82,8 @@ const CurrentMessInmates = (props)=>{
                 </tr>
               ))}
           </table>
+          </>
+          
     )
 }
 export default CurrentMessInmates

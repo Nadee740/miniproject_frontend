@@ -80,17 +80,29 @@ function App() {
   */
 
   useEffect(() => {
+    // setUser(
+    //     {
+    //         user_id: '1',
+    //         password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
+    //         name: 'nadeem',
+    //         email: 'nadeemblayparambil@gmail.com',
+    //         mobile_no: '773607084',
+    //         designation: 'faculty',
+    //         is_admin: true,
+    //         roles: [ 'admin','HOD','WD','SA' ]
+    //       }
+    // )
     setUser(
-        {
-            user_id: '1',
-            password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
-            name: 'nadeem',
-            email: 'nadeemblayparambil@gmail.com',
-            mobile_no: '773607084',
-            designation: 'faculty',
-            is_admin: true,
-            roles: [ 'admin','HOD','WD','SA' ]
-          }
+        {designation: "student",
+            email: "nadeemblayparambil@gmail.com",
+            is_admin:false,
+            mobile_no: "+917736070884",
+            name: "student1",
+            password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
+            roles:  ['ms', 'md'],
+            stage: "inmate",
+            hostel: 'MH',
+            user_id: "3"}
     )
     // setAuthenticating(true)
     // setLoading(true)
@@ -105,7 +117,9 @@ function App() {
 
     //     console.log("success" , response ,"response.data");
     //     if(response.data!="")
-    //       setUser(response.data)
+    //     {        console.log(response.data)
+    //         setUser(response.data)}
+
     //     else 
     //       setUser(null)
     // })

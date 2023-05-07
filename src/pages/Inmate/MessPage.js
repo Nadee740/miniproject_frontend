@@ -6,6 +6,9 @@ import {motion} from 'framer-motion'
 function MessPage() {
   const [tabSelected, setTabSelected] = useState(1)
   const [noofDays,setNoofDays]=useState(0)
+  const [noofMaxmessoutDays,setnoofMaxmessoutDays]=useState(0);
+  const [noOfMaxMessOutsinMonth,setnoOfMaxMessOutsinMonth]=useState(0);
+
   return (
     <div className='flex flex-col w-full items-center min-h-screen h-full overflow-y-scroll'>
       <div className='flex flex-row justify-between w-11/12 pt-4 items-center'>
@@ -44,7 +47,7 @@ function MessPage() {
           {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>}
           <br />
         </div>
-        {tabSelected===1?<MessBill/>:<MessOutPage noofDays={noofDays} setNoofDays={setNoofDays}/>}
+        {tabSelected===1?<MessBill/>:<MessOutPage noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}
       </motion.div>
     </div>
   )

@@ -6,24 +6,51 @@ import { baseUrl } from '../../baseUrl';
 import axios from 'axios'
 import {UserContext} from '../../Contexts/UserContext'
 function MessSecretary() {
-
+  
+  const{user}=useContext(UserContext)
+  const [selectedHostel,setSelectedHostel]=useState();
   const [tabSelected, setTabSelected] = useState(1)
   const [noofDays,setNoofDays]=useState(0)
   const [maxNoofDays,setMaxNoofDays]=useState(null)
+  const [maxNoofDaysMonth,setNoofDaysMonth]=useState(0);
   const [inmates, setInmates] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8080/inmate/messoutdays')
-    .then((res)=>{
-      setNoofDays(res.data[0].value)
-    })
-    axios.get('http://localhost:8080/inmate/maximum-messoutdays')
-    .then((res)=>{
-      setMaxNoofDays(res.data[0].value)
-    })
+    if(window.location.href.includes("messsec"))
+    {
+        axios.get(`http://localhost:8080/inmate/messoutdays?hostel=${user.hostel}`)
+        .then((res)=>{
+          setNoofDays(res.data[0].value)
+        })
+        axios.get(`http://localhost:8080/inmate/maximum-messoutdays?hostel=${user.hostel}`)
+        .then((res)=>{
+          setMaxNoofDays(res.data[0].value)
+        })
+        axios.get(`http://localhost:8080/inmate/maximum-messoutdays-month?hostel=${user.hostel}`)
+        .then((res)=>{
+            setNoofDaysMonth(res.data[0].value)
+        })
+        
+    }
+    else
+    {
+        axios.get(`http://localhost:8080/inmate/messoutdays?hostel=${selectedHostel}`)
+        .then((res)=>{
+          setNoofDays(res.data[0].value)
+        })
+        axios.get(`http://localhost:8080/inmate/maximum-messoutdays?hostel=${selectedHostel}`)
+        .then((res)=>{
+          setMaxNoofDays(res.data[0].value)
+        })
+        axios.get(`http://localhost:8080/inmate/maximum-messoutdays-month?hostel=${user.hostel}`)
+        .then((res)=>{
+            setNoofDaysMonth(res.data[0].value)
+        })
+    }
+
   }, [])
 
-
+// alert(window.location.href)
 
   return (
     <div className='flex flex-col w-full items-center min-h-screen h-full overflow-y-scroll'>
@@ -63,7 +90,7 @@ function MessSecretary() {
           {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>}
           <br />
         </div>
-        {tabSelected===1?<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>:<MessOutReqs maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays}/>}
+        {tabSelected===1?<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>:<MessOutReqs selectedHostel={selectedHostel} setSelectedHostel={setSelectedHostel} maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays} maxNoofDaysMonth={maxNoofDaysMonth} setNoofDaysMonth={setNoofDaysMonth}/>}
       </motion.div>
     </div>
   )
