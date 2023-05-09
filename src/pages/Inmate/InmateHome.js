@@ -46,16 +46,16 @@ function InmateHome() {
             to:"/inmate/mess",
             icon: editSvg,
         },
-        {
-            title:"Certificate",
-            to:"/inmate/certificates",
-            icon: bookSvg,
-        },
-        {
-            title:"Hostel",
-            to:"/inmate/hostel",
-            icon: fitnessSvg,
-        },
+        // {
+        //     title:"Certificate",
+        //     to:"/inmate/certificates",
+        //     icon: bookSvg,
+        // },
+        // {
+        //     title:"Hostel",
+        //     to:"/inmate/hostel",
+        //     icon: fitnessSvg,
+        // },
         {
           title:"Roles",
           icon:userSvg,

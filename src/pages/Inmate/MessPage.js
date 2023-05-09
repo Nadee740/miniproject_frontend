@@ -1,9 +1,11 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import axios from 'axios'
 import MessOutPage from '../../components/MessOutPage';
 import MessBill from '../../components/MessBill'
 import {motion} from 'framer-motion'
+import { UserContext } from '../../Contexts/UserContext';
 function MessPage() {
+  const {user}=useContext(UserContext)
   const [tabSelected, setTabSelected] = useState(1)
   const [noofDays,setNoofDays]=useState(0)
   const [noofMaxmessoutDays,setnoofMaxmessoutDays]=useState(0);
@@ -15,7 +17,7 @@ function MessPage() {
         <div className='text-xl font-bold'>Mess</div>
         <div className='flex flex-row space-x-4 items-center'>
             <div className='bg-white border rounded-full w-10 aspect-square'/>
-            <div>user Name</div>
+            <div>{user.name}</div>
         </div>
       </div>
 
@@ -39,12 +41,12 @@ function MessPage() {
                   setTabSelected(2)
                 }}
               >
-                <div>Mess</div>
+                <div>Mess in/Mess out</div>
                 <div className={tabSelected===2?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
           </div>
 
-          {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>}
+          {/* {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>} */}
           <br />
         </div>
         {tabSelected===1?<MessBill/>:<MessOutPage noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}

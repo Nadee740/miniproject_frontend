@@ -8,7 +8,7 @@ import {UserContext} from '../../Contexts/UserContext'
 function MessSecretary() {
   
   const{user}=useContext(UserContext)
-  const [selectedHostel,setSelectedHostel]=useState();
+  const [selectedHostel,setSelectedHostel]=useState('MH');
   const [tabSelected, setTabSelected] = useState(1)
   const [noofDays,setNoofDays]=useState(0)
   const [maxNoofDays,setMaxNoofDays]=useState(null)
@@ -42,7 +42,7 @@ function MessSecretary() {
         .then((res)=>{
           setMaxNoofDays(res.data[0].value)
         })
-        axios.get(`http://localhost:8080/inmate/maximum-messoutdays-month?hostel=${user.hostel}`)
+        axios.get(`http://localhost:8080/inmate/maximum-messoutdays-month?hostel=${selectedHostel}`)
         .then((res)=>{
             setNoofDaysMonth(res.data[0].value)
         })

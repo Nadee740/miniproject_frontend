@@ -24,18 +24,15 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
     //       setNoofDays(res.data[0].value)
     //     })
     
-    const url=user.hostel==="MH"?'http://localhost:8080/inmate/mess-requirements':'http://localhost:8080/inmate/mess-requirements';
+    const url=user.hostel==="MH"?'http://localhost:8080/inmate/mess-requirements':'http://localhost:8080/inmate/mess-requirements-LH';
         axios.get(url)
         .then((res)=>{
-          console.log(res.data)
         setNoofDays(res.data.min[0].value)
         setnoofMaxmessoutDays(res.data.max[0].value)
-        console.log(res.data.max[0].value,res.data.maxinmonth[0].value)
         setnoOfMaxMessOutsinMonth(res.data.maxinmonth[0].value)
         })
     axios.get(`${baseUrl}/inmate/messouthistory`,{params:{user_id:user.user_id}})
     .then(res=>{
-      console.log(res.data)
       setMessOutHistory(res.data.rows)
       if(res.data.rows.length>0){
         setIsEmpty(false)

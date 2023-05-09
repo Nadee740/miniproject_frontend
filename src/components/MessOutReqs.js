@@ -21,6 +21,8 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
     if(window.location.href.includes("messsec"))
     {
         setSelectedHostel(user.hostel)
+    }else{
+        setSelectedHostel("MH")
     }
     axios
       .get(

@@ -19,15 +19,16 @@
     // }
 
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import App from '../App'
 import keySvg from'../icons/key.svg'
 import logoutSvg from'../icons/logout.svg'
 import userSvg from'../icons/user.svg'
+import { UserContext } from '../Contexts/UserContext'
 
 function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole}) {
-
+   const {user,setUser}=useContext(UserContext)
     const [activeIndex, setActiveIndex] = useState(-1)
 
     const [links, setLinks] = useState(myLinks)
@@ -81,7 +82,9 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
 
     let navigate = useNavigate();
     const logout=()=>{
-        axios.post('http://localhost:8080/logout')
+        axios.get('http://localhost:8080/logout',{
+            withCredentials: true
+        })
         .then(function (response) {
             console.log("success" , response);
             navigate("/")
@@ -161,7 +164,7 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
                 <div className='flex flex-row items-center px-2 py-4 space-x-3'>
                     {/* LOGO */}
                     <div className='bg-white border border-solid border-black rounded-full w-12 aspect-square'/>
-                    <div>Name</div>
+                    <div>{user.name}</div>
                 </div>
                 {/* <hr className='h-px bg-stone-800 w-full' /> */}
 
