@@ -3,7 +3,6 @@ import { useState,useContext,useEffect } from "react"
 import { baseUrl } from "../baseUrl"
 import { UserContext } from "../Contexts/UserContext"
 import ConfirmDialog from '../components/ConfirmDialog'
-
 function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,setNoofDays,setnoofMaxmessoutDays,setnoOfMaxMessOutsinMonth}) {
 
   const {user,setLoading}=useContext(UserContext)
@@ -24,7 +23,7 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
     //       setNoofDays(res.data[0].value)
     //     })
     
-    const url=user.hostel==="MH"?'http://localhost:8080/inmate/mess-requirements':'http://localhost:8080/inmate/mess-requirements-LH';
+    const url=user.hostel==="MH"?`${baseUrl}/inmate/mess-requirements`:`${baseUrl}//inmate/mess-requirements-LH`;
         axios.get(url)
         .then((res)=>{
         setNoofDays(res.data.min[0].value)

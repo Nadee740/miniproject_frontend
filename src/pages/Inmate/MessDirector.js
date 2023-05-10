@@ -6,12 +6,13 @@ import MessDuesView from '../../components/MessDuesView'
 import CurrentMessInmates from '../../components/CurrentMessInmates'
 import MessOutReqs from '../../components/MessOutReqs'
 import axios from 'axios'
+import { baseUrl } from '../../baseUrl'
 function MessDirector() {
   const [tabSelected, setTabSelected] = useState(1)
   const [inmates,setInmates] = useState([])
   const [noofDays,setNoofDays]=useState(0)
   useEffect(() => {
-    axios.get('http://localhost:8080/inmate/messoutdays')
+    axios.get(`${baseUrl}/inmate/messoutdays`)
     .then((res)=>{
       setNoofDays(res.data[0].value)
     })

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
 import Draggable from 'react-draggable';
 import axios from 'axios';
-
+import { baseUrl } from '../../baseUrl';
 function AdminPaths() {
 
     // S: Students
@@ -53,7 +53,7 @@ function AdminPaths() {
 
     useEffect(() => {
         // To set pathsData
-        axios.get('http://localhost:8080/admin/getPathsData')
+        axios.get(`${baseUrl}/admin/getPathsData`)
         .then(function (response) {
             console.log("hostel data is set", response.data)
             setPathData(response.data)
@@ -63,7 +63,7 @@ function AdminPaths() {
         });
 
         // To set Certificates
-        axios.get('http://localhost:8080/admin/getCertificates')
+        axios.get(`${baseUrl}/admin/getCertificates`)
         .then(function (response) {
             setCertificates([...response.data.map(item=>(
                 {
@@ -78,7 +78,7 @@ function AdminPaths() {
     }, [])
 
     const postPath=()=>{
-        axios.post('http://localhost:8080/admin/postPath',{
+        axios.post(`${baseUrl}/admin/postPath`,{
             path: path.join("-"),
             start: newStartItem
         })

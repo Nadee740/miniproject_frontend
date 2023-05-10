@@ -3,7 +3,7 @@ import {motion} from "framer-motion"
 import axios from 'axios'
 import { ListItemSecondaryAction } from '@mui/material'
 import { UserContext } from '../../Contexts/UserContext'
-
+import { baseUrl } from '../../baseUrl'
 function CreateApplications() {
 
   const currentApplications=[
@@ -145,7 +145,7 @@ function CreateApplications() {
   }
 
   const getAndSetCertificates=()=>{
-    axios.get('http://localhost:8080/admin/getCertificates')
+    axios.get(`${baseUrl}/admin/getCertificates`)
     .then(function (response) {
         var tempData=[]
         console.log(response.data)
@@ -182,7 +182,7 @@ function CreateApplications() {
     const applicationIndex=tabSelected==0?applicationSelectedIndex:createdApplicationIndex
 
     setLoading(true)
-    axios.get('http://localhost:8080/admin/getTableAndCols',{
+    axios.get(`${baseUrl}/admin/getTableAndCols`,{
         params:{
           certificateId: currentApplicationsData[applicationIndex].certificateId
         }

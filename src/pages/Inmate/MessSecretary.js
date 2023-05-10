@@ -18,15 +18,15 @@ function MessSecretary() {
   useEffect(() => {
     if(window.location.href.includes("messsec"))
     {
-        axios.get(`http://localhost:8080/inmate/messoutdays?hostel=${user.hostel}`)
+        axios.get(`${baseUrl}/inmate/messoutdays?hostel=${user.hostel}`)
         .then((res)=>{
           setNoofDays(res.data[0].value)
         })
-        axios.get(`http://localhost:8080/inmate/maximum-messoutdays?hostel=${user.hostel}`)
+        axios.get(`${baseUrl}/inmate/maximum-messoutdays?hostel=${user.hostel}`)
         .then((res)=>{
           setMaxNoofDays(res.data[0].value)
         })
-        axios.get(`http://localhost:8080/inmate/maximum-messoutdays-month?hostel=${user.hostel}`)
+        axios.get(`${baseUrl}/inmate/maximum-messoutdays-month?hostel=${user.hostel}`)
         .then((res)=>{
             setNoofDaysMonth(res.data[0].value)
         })
@@ -34,15 +34,15 @@ function MessSecretary() {
     }
     else
     {
-        axios.get(`http://localhost:8080/inmate/messoutdays?hostel=${selectedHostel}`)
+        axios.get(`${baseUrl}/inmate/messoutdays?hostel=${selectedHostel}`)
         .then((res)=>{
           setNoofDays(res.data[0].value)
         })
-        axios.get(`http://localhost:8080/inmate/maximum-messoutdays?hostel=${selectedHostel}`)
+        axios.get(`${baseUrl}/inmate/maximum-messoutdays?hostel=${selectedHostel}`)
         .then((res)=>{
           setMaxNoofDays(res.data[0].value)
         })
-        axios.get(`http://localhost:8080/inmate/maximum-messoutdays-month?hostel=${selectedHostel}`)
+        axios.get(`${baseUrl}/inmate/maximum-messoutdays-month?hostel=${selectedHostel}`)
         .then((res)=>{
             setNoofDaysMonth(res.data[0].value)
         })

@@ -4,6 +4,7 @@ import AlertDialog from './AlertDialog';
 import ConfirmDialog from './ConfirmDialog';
 import {UserContext} from '../Contexts/UserContext'
 import { TrafficRounded } from '@mui/icons-material';
+import { baseUrl } from '../baseUrl';
 export default function HostelOut(){
     const [fromDate,setFromDate]=useState("")
     const [toDate,setToDate]=useState("")
@@ -16,7 +17,7 @@ export default function HostelOut(){
     const {user,setLoading}=useContext(UserContext)
     const submitForm = ()=>{
         setLoading(TrafficRounded)
-        axios.post('http://localhost:8080/inmate/hostelout',{
+        axios.post(`${baseUrl}/inmate/hostelout`,{
                     user_id:user.user_id,
                     fromDate:fromDate,
                     toDate:toDate,

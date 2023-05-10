@@ -26,7 +26,7 @@ import keySvg from'../icons/key.svg'
 import logoutSvg from'../icons/logout.svg'
 import userSvg from'../icons/user.svg'
 import { UserContext } from '../Contexts/UserContext'
-
+import { baseUrl } from '../baseUrl'
 function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole}) {
    const {user,setUser}=useContext(UserContext)
     const [activeIndex, setActiveIndex] = useState(-1)
@@ -82,7 +82,7 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
 
     let navigate = useNavigate();
     const logout=()=>{
-        axios.get('http://localhost:8080/logout',{
+        axios.get(`${baseUrl}/logout`,{
             withCredentials: true
         })
         .then(function (response) {

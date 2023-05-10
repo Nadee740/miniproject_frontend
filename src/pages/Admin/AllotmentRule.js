@@ -2,7 +2,7 @@ import { UpdateTwoTone } from '@mui/icons-material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Spreadsheet from "react-spreadsheet";
-
+import { baseUrl } from '../../baseUrl';
 function AllotmentRule() {
   
   const hostelCols=[
@@ -74,7 +74,7 @@ function AllotmentRule() {
   const [altTextIndex, setAltTextIndex] = useState(-1) //to show the formula on hover
 
   const getAllotmentColumns=()=>{
-    axios.get('http://localhost:8080/admin/getAllotmentColumns')
+    axios.get(`${baseUrl}/admin/getAllotmentColumns`)
     .then(function (response) {
       console.log("allotmnent cols: ",response.data)
 
@@ -98,7 +98,7 @@ function AllotmentRule() {
   }
 
   const getHostelRequirements=(req, res)=>{
-    axios.get('http://localhost:8080/admin/getHostelRequirements')
+    axios.get(`${baseUrl}/admin/getHostelRequirements`)
     .then(function (response) {
 
       console.log("dsds",response.data["rankRule"].split(','))
@@ -121,7 +121,7 @@ function AllotmentRule() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8080/admin/getHostelCols')
+    axios.get(`${baseUrl}/admin/getHostelCols`)
     .then(function (response) {
        console.log(response.data)
        setHostelColsData(response.data) //filling the drop down of existing columns
@@ -137,7 +137,7 @@ function AllotmentRule() {
 
   const updateHostelAllotmentOpen=()=>{
     console.log(combinedColumnsData)
-    axios.post('http://localhost:8080/admin/updateHostelAllotmentOpen',{
+    axios.post(`${baseUrl}/admin/updateHostelAllotmentOpen`,{
       open:allotmentOpen==true?false:true//joining the array ['A:ColumnName1:Asc', 'B:ColumnName2:Asc']
     })
     .then(function (response) {
@@ -151,7 +151,7 @@ function AllotmentRule() {
 
   const postModification=()=>{
     console.log(combinedColumnsData)
-    axios.post('http://localhost:8080/admin/updateRule',{
+    axios.post(`${baseUrl}/admin/updateRule`,{
       columnsData:combinedColumnsData,
       rankRuleData: updatedRule.join(',') //joining the array ['A:ColumnName1:Asc', 'B:ColumnName2:Asc']
     })

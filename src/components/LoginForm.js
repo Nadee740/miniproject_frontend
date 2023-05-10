@@ -2,7 +2,7 @@ import {useContext, useState} from "react"
 import {Link} from "react-router-dom"
 import axios from 'axios'
 import {UserContext} from '../Contexts/UserContext'
-
+import { baseUrl } from "../baseUrl"
 function LoginForm() {
     
     const [admissionno,setAdmissionNo]=useState("")
@@ -13,7 +13,7 @@ function LoginForm() {
     const login=()=>{
         console.log("here login")
         setLoading(true)
-        axios.post('http://localhost:8080/auth/login', {
+        axios.post(`${baseUrl}/auth/login`, {
                 'username': username,
                 'password': password
         },{

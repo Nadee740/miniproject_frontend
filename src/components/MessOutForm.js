@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import AlertDialog from "./AlertDialog";
 import ConfirmDialog from "./ConfirmDialog";
+import { baseUrl } from "../baseUrl";
 function MessOutForm({
   noofDays,
   noofMaxmessoutDays,
@@ -31,7 +32,7 @@ function MessOutForm({
  
     setLoading(true);
     axios
-      .post("http://localhost:8080/inmate/checkmessout", {
+      .post(`${baseUrl}/inmate/checkmessout`, {
         user_id: user.user_id,
         hostel:user.hostel
       })
@@ -72,7 +73,7 @@ function MessOutForm({
       messinMinDate.getDate();
     const toDate = allowableDays == 0 ? null : date1;
     axios
-      .post("http://localhost:8080/inmate/applymessout", {
+      .post(`${baseUrl}/inmate/applymessout`, {
         user_id: user.user_id,
         fromDate: fromDate,
         toDate: toDate,
@@ -103,7 +104,7 @@ function MessOutForm({
   const submitMessinForm = () => {
     setLoading(true);
     axios
-      .post("http://localhost:8080/inmate/applymessin", {
+      .post(`${baseUrl}/inmate/applymessin`, {
         user_id: user.user_id,
         toDate: toDate,
       })

@@ -3,6 +3,7 @@ import CertificateForm from '../../components/CertificateForm'
 import ApplicationList from '../../components/ApplicationList'
 import {motion} from 'framer-motion'
 import { UserContext } from '../../Contexts/UserContext';
+import { baseUrl } from '../../baseUrl';
 function CertificatePage() {
   
   const {user} = useContext(UserContext)

@@ -64,6 +64,7 @@ import FacultySignUp from './pages/FacultySignUp'
 import Athira from './pages/Athira';
 import ApplyMessout from './pages/Student/ApplyMessout';
 import MessManagementWarden from './pages/Warden/MessManagement';
+import { baseUrl } from './baseUrl';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -107,7 +108,8 @@ function App() {
     setAuthenticating(true)
     setLoading(true)
     console.log("Im inside useffect isauthenticated")
-    axios.get('http://localhost:8080/auth/isAuthenticated',{
+   
+    axios.get(`${baseUrl}/auth/isAuthenticated`,{
         withCredentials: true
     })
     .then(function (response) {
