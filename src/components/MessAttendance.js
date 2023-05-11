@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect,useContext, useState } from 'react'
 import { baseUrl } from '../baseUrl'
 import {UserContext} from '../Contexts/UserContext'
-const CurrentMessInmates = (props)=>{
+const MessAttendance = (props)=>{
     const {user,setLoading} = useContext(UserContext)
     var date = new Date();
     var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
@@ -25,7 +25,7 @@ const CurrentMessInmates = (props)=>{
     
     return(
      <>
-         <div className="flex items-center justify-between w-4/12 p">
+         <div className="flex items-center justify-between w-100 p">
           {user.stage=="inmate"?<select
             className="p-3 ring-slate-200 ring-2 rounded-xl outline-none"
           >
@@ -47,7 +47,7 @@ const CurrentMessInmates = (props)=>{
             <option value="fourthyear">Fourth Year</option>
       </select>  */}
         </div>
-        <div className="flex items-center justify-between w-4/12 py-4">
+        <div className="flex items-center justify-between w-9/12 py-4">
     
           <p className="font-semibold">Select Date </p>
           <input
@@ -59,7 +59,7 @@ const CurrentMessInmates = (props)=>{
             type="date"
           ></input>
         </div>
-        <div className="flex items-center justify-between w-4/12 py-4">
+        <div className="flex items-center justify-between w-8/12 py-4">
           <p className="font-semibold">No Of Requests :</p>
           <p className="font-semibold">{props.inmates.length} </p>
         </div>
@@ -69,6 +69,7 @@ const CurrentMessInmates = (props)=>{
                 <th className='p-3'>Name</th>
                 <th className='p-3'>Hostel Admission No.</th>
                 <th className='p-3'>Room No.</th>
+                <th className='p-3'>Attendance.</th>
               </tr>
               {props.inmates.map((user, index)=>(
                 <tr 
@@ -86,4 +87,4 @@ const CurrentMessInmates = (props)=>{
           
     )
 }
-export default CurrentMessInmates
+export default MessAttendance;

@@ -18,7 +18,7 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
 
   useEffect(() => {
     setLoading(true);
-    if(window.location.href.includes("messsec"))
+    if(window.location.href.includes("inmate"))
     {
         setSelectedHostel(user.hostel)
     }else{

@@ -66,8 +66,8 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
         <Box
           sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
           role="presentation"
-          onClick={toggleDrawer(anchor, false)}
-          onKeyDown={toggleDrawer(anchor, false)}
+        //   onClick={toggleDrawer(anchor, false)}
+        //   onKeyDown={toggleDrawer(anchor, false)}
         >
           <div className='flex flex-row bg-primary min-h-screen h-full text-sm overflow-hidden'>
             <div className='flex flex-col w-full bg-white overflow-y-auto'>
@@ -82,7 +82,7 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
                     {links.map((link, index)=>(
                         <div className='flex flex-col w-full'>
                             
-                            {link.to!=null&&<Link to={link.to} className="">
+                            {link.to!=null&&<Link onClick={()=>{toggleDrawer(anchor,false)}} to={link.to} className="">
                                 <SideBarLink link={link} index={index} />
                             </Link>}
                             {link.to==null&&<SideBarLink link={link} index={index} />}
@@ -95,6 +95,7 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
                                         key={subIndex} 
                                         className={'ml-8 py-2 px-2 flex flex-row space-x-4 justify-self-start items-center '+(parseInt(localStorage.getItem('subIndex'))==subIndex?'text-blue-500':'text-black')}
                                         onClick={()=>{
+                                            toggleDrawer(anchor, false)
                                             var newLinks=[...links]
                                             newLinks[index].subLinkActiveIndex=subIndex
                                             localStorage.setItem('subIndex',JSON.stringify(subIndex))
@@ -278,7 +279,7 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
         return (
             <div 
                 onClick={()=>{
-
+                    
                     //To close any link that have sublinks
                     links.forEach((link, linkIndex) => {
                         if(index!=linkIndex && link.subLinks!=undefined && link.subLinkOpen==true)
@@ -341,7 +342,7 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
             <div>
             {['left'].map((anchor) => (
               <React.Fragment key={anchor}>
-                <Button onClick={toggleDrawer(anchor, true)}><ViewSidebar size={28}></ViewSidebar></Button>
+                <Button onClick={toggleDrawer(anchor, true)}><ViewSidebar size={20}></ViewSidebar></Button>
                 <SwipeableDrawer
                   anchor={anchor}
                   open={state[anchor]}
