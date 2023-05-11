@@ -31,7 +31,7 @@ function LoginForm() {
     }
 
     return (
-        <div className="flex flex-col bg-white w-5/12 text-left bg-white p-10 rounded-xl">
+        <div className="flex flex-col bg-white w-8/12 text-left bg-white p-10 rounded-xl m-auto">
             <h2 className="font-bold text-2xl">Log In</h2>
             <p>Welcome Back!</p>
             <p>Please enter your details</p>

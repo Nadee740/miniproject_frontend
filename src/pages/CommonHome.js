@@ -104,13 +104,14 @@ function CommonHome() {
     
     return (
         <div className='flex w-full flex-row bg-primary h-screen'>
-            <div className='w-3/12 '>
+        <SideBar myLinks={links} roles={user.roles} setRole={setRole} currentRole={role}/>
+            {/* <div className='w-3/12 '> */}
                 {/* myActiveIndex is the index of the link that should be active*/}
                 {/*myOpenedIndex is the index of the link(with sublinks) that is made open */}
                 {/* roleIndex is the index of the role selected */}
                 {/* roleTo is the route of the home page of the corresponding role */}
-                <SideBar myLinks={links} roles={user.roles} setRole={setRole} currentRole={role}/>
-            </div>
+                {/* <SideBar myLinks={links} roles={user.roles} setRole={setRole} currentRole={role}/>
+            </div> */}
             <Outlet context={[role, setRole]}/>
         </div>
     )

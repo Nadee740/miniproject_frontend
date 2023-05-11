@@ -23,7 +23,7 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
     //       setNoofDays(res.data[0].value)
     //     })
     
-    const url=user.hostel==="MH"?`${baseUrl}/inmate/mess-requirements`:`${baseUrl}//inmate/mess-requirements-LH`;
+    const url=user.hostel==="MH"?`${baseUrl}/inmate/mess-requirements`:`${baseUrl}/inmate/mess-requirements-LH`;
         axios.get(url)
         .then((res)=>{
         setNoofDays(res.data.min[0].value)

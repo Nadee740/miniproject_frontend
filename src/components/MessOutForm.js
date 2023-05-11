@@ -132,11 +132,12 @@ function MessOutForm({
     return year + "-" + month + "-" + day;
   };
   const getMessinStartDate = () => {
-    let date;
+    let date,daysadd;
     const today = new Date();
     const messoutfromdate = new Date(MessoutFromdate);
+    noofDays==0?daysadd=1:daysadd=noofDays
     const messinMinDate = new Date(
-      messoutfromdate.setDate(messoutfromdate.getDate() + noofDays - 1)
+      messoutfromdate.setDate(messoutfromdate.getDate() + daysadd- 1 )
     );
     today < messinMinDate ? (date = messinMinDate) : (date = today);
     let month = (date.getMonth() + 1).toString();
@@ -236,7 +237,7 @@ function MessOutForm({
         {exceededLimit?"Exceeded Monthly Limit for this month":isMessout ? "Apply for Mess in" : "Apply for Mess Out"}
       </h2>
       <form onSubmit={submitHandler}>
-        <div className="grid grid-cols-2 w-6/12 gap-4 mb-3">
+        <div className="grid grid-cols-2 w-100 gap-4 mb-3">
           {exceededLimit?"":(isMessout ? (
             <>
               <label htmlFor="">From:</label>{" "}
@@ -248,7 +249,7 @@ function MessOutForm({
                 onChange={(e) => {
                   setToDate(e.target.value);
                 }}
-                className="w-full py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none"
+                className="w-12/12 py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none"
                 required
               />
             </>
