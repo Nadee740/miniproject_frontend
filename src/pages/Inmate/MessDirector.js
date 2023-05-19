@@ -120,7 +120,7 @@ function MessDirector() {
         </div>
         {tabSelected===1&&<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>}
         {tabSelected===2&&<MessOutReqs selectedHostel={selectedHostel} setSelectedHostel={setSelectedHostel} maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays} maxNoofDaysMonth={maxNoofDaysMonth} setNoofDaysMonth={setNoofDaysMonth}/>}
-        {tabSelected===3&&<MessAttendance inmates={inmates} setInmates={setInmates}/>}
+        {tabSelected===3&&<MessAttendance allInmates={allInmates} setAllInmates={setAllInmates}/>}
         {tabSelected===4&&<UploadMessBill/>}
         {tabSelected===5&&<MessDuesView/>}
 

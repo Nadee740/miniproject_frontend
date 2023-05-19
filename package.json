@@ -36,6 +36,7 @@
     "react-xarrows": "^2.0.2",
     "sass": "^1.52.1",
     "scheduler": "^0.21.0",
+    "sheetjs-style": "^0.15.8",
     "slick-carousel": "^1.8.1",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.4",

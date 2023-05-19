@@ -4,6 +4,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import axios from "axios";
 import { baseUrl } from "../baseUrl";
 import { UserContext } from "../Contexts/UserContext";
+import * as FileSaver from 'file-saver';
+import XLSX from 'sheetjs-style';
 function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, maxNoofDays, setMaxNoofDays,maxNoofDaysMonth,setNoofDaysMonth }) {
   const {user}=useContext(UserContext)
     var date = new Date();
@@ -18,7 +20,7 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
 
   useEffect(() => {
     setLoading(true);
-    if(window.location.href.includes("inmate"))
+    if(user.stage=='inmate')
     {
         setSelectedHostel(user.hostel)
     }else{
@@ -79,7 +81,16 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
         console.log(res);
       });
   };
-
+  const fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8';
+  const downloadExcel=async()=>{
+        // using Java Script method to get PDF file
+      const ws=XLSX.utils.json_to_sheet(messreqs);
+      const wb={Sheets:{'data':ws},SheetNames:['data']};
+      const excelBuffer=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+      const data=new Blob([excelBuffer],{type:fileType});
+      FileSaver.saveAs(data,`Mess Out List ${selectedDate}.xlsx`)
+    
+  }
   return (
     <>
       <div className="w-11/12">
@@ -116,12 +127,11 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
       }
        
         <div className="flex items-center justify-end mb-5">
-          <button className="bg-stone-800 text-white p-2 rounded-lg text-sm mr-5">
+          <button className="bg-stone-800 text-white p-2 rounded-lg text-sm mr-5" onClick={()=>{
+            downloadExcel()
+          }}>
             Download as Excel
           </button>
-          {/* <button className="bg-stone-800 text-white p-2 rounded-lg text-sm">
-            Publish Rank List
-          </button> */}
         </div>
 
         <div className="flex items-center mt-5 mb-5">
@@ -275,14 +285,14 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
                 <td className="p-3">
                   {fdate.getDate() +
                     "/" +
-                    fdate.getMonth() +
+                    parseInt(fdate.getMonth() +1)+
                     "/" +
                     fdate.getFullYear()}
                 </td>
                 <td className="p-3">
                   {tdate.getDate() +
                     "/" +
-                    tdate.getMonth() +
+                    parseInt(tdate.getMonth() +1)+
                     "/" +
                     tdate.getFullYear()}
                 </td>

@@ -10,7 +10,7 @@ const CurrentMessInmates = (props)=>{
     const[selectedHostel,setSelectedHostel]=useState("MH");
  
   useEffect(() => {
-    if(window.location.href.includes('inmate'))
+    if(user.stage=='inmate')
     {
         setSelectedHostel(user.hostel)
     }
