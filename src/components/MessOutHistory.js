@@ -3,7 +3,7 @@ import { useState,useContext,useEffect } from "react"
 import { baseUrl } from "../baseUrl"
 import { UserContext } from "../Contexts/UserContext"
 import ConfirmDialog from '../components/ConfirmDialog'
-function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,setNoofDays,setnoofMaxmessoutDays,setnoOfMaxMessOutsinMonth}) {
+function MessOutHistory({setEditPrevToDate,setEditPrevFromDate,seteditPrevData,messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,setNoofDays,setnoofMaxmessoutDays,setnoOfMaxMessOutsinMonth}) {
 
   const {user,setLoading}=useContext(UserContext)
 
@@ -82,6 +82,8 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
 
   const today = ()=>{
     const date=new Date();
+    date.setDate(date.getDate()-15);
+    console.log(date)
     return date.getTime();
   }
    
@@ -95,7 +97,7 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
                    <th className='p-3'>From Date</th>
                    <th className='p-3'>To Date</th>
                    <th className='p-3'>Number of Days</th>
-                   <th className='p-3'></th>
+                   <th className='p-3'>Edit</th>
                  </tr>
                  {messOutHistory.map((user, index)=>{
                    var fdate=new Date(user.fromdate)
@@ -116,7 +118,11 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
                       <td className='p-3'>{actualfdate}</td>
                       <td className='p-3'>{user.showtodate?actualtdate:""}</td>
                       <td className='p-3'>{user.showtodate?((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24))+1:""}</td>
-                      {/* <td className='p-3'>{today()<tdate.getTime()?<button className="submit-button-black" onClick={()=>{cancelPress(fdate,tdate,user.fromdate,user.tdate)}}>Cancel</button>:''}</td> */}
+                      <td className='p-3'>{today()<tdate.getTime()?<button className="submit-button-black" onClick={()=>{
+                        seteditPrevData(true)
+                        setEditPrevFromDate(fdate);
+                        setEditPrevToDate(tdate)
+                      }}>Edit</button>:''}</td>
                     </tr>
                  )
                 })}
