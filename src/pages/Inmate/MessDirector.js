@@ -13,6 +13,7 @@ function MessDirector() {
  const {user}=useContext(UserContext)
   const [selectedHostel,setSelectedHostel]=useState('MH');
   const [tabSelected, setTabSelected] = useState(1)
+  const [messoutpredaysk,setMessoutpredaysk ]=useState(0)
   const [noofDays,setNoofDays]=useState(0)
   const [maxNoofDays,setMaxNoofDays]=useState(null)
   const [maxNoofDaysMonth,setNoofDaysMonth]=useState(0);
@@ -20,7 +21,7 @@ function MessDirector() {
   const [allInmates,setAllInmates]=useState([])
 
   useEffect(() => {
-    if(window.location.href.includes("messsec"))
+    if(user.stage=='inmate')
     {
         axios.get(`${baseUrl}/inmate/messoutdays?hostel=${user.hostel}`)
         .then((res)=>{
@@ -33,6 +34,10 @@ function MessDirector() {
         axios.get(`${baseUrl}/inmate/maximum-messoutdays-month?hostel=${user.hostel}`)
         .then((res)=>{
             setNoofDaysMonth(res.data[0].value)
+        })
+        axios.get(`${baseUrl}/inmate/messoutpredaysk?hostel=${user.hostel}`)
+        .then((res)=>{
+            setMessoutpredaysk(res.data[0].value)
         })
         
     }
@@ -49,6 +54,10 @@ function MessDirector() {
         axios.get(`${baseUrl}/inmate/maximum-messoutdays-month?hostel=${selectedHostel}`)
         .then((res)=>{
             setNoofDaysMonth(res.data[0].value)
+        })
+        axios.get(`${baseUrl}/inmate/messoutpredaysk?hostel=${selectedHostel}`)
+        .then((res)=>{
+            setMessoutpredaysk(res.data[0].value)
         })
     }
 
@@ -119,7 +128,7 @@ function MessDirector() {
           <br />
         </div>
         {tabSelected===1&&<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>}
-        {tabSelected===2&&<MessOutReqs selectedHostel={selectedHostel} setSelectedHostel={setSelectedHostel} maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays} maxNoofDaysMonth={maxNoofDaysMonth} setNoofDaysMonth={setNoofDaysMonth}/>}
+        {tabSelected===2&&<MessOutReqs selectedHostel={selectedHostel} setSelectedHostel={setSelectedHostel} messoutpredaysk={messoutpredaysk} setMessoutpredaysk={setMessoutpredaysk} maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays} maxNoofDaysMonth={maxNoofDaysMonth} setNoofDaysMonth={setNoofDaysMonth}/>}
         {tabSelected===3&&<MessAttendance allInmates={allInmates} setAllInmates={setAllInmates}/>}
         {tabSelected===4&&<UploadMessBill/>}
         {tabSelected===5&&<MessDuesView/>}

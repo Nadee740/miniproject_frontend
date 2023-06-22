@@ -65,6 +65,9 @@ import Athira from './pages/Athira';
 import ApplyMessout from './pages/Student/ApplyMessout';
 import MessManagementWarden from './pages/Warden/MessManagement';
 import { baseUrl } from './baseUrl';
+import ChangePassword from './pages/ChangePassword';
+import ForgotPassword from './pages/ForgotPassword';
+import SetNewPasswordPage from './pages/SetNewPassword';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -93,43 +96,45 @@ function App() {
     //         roles: [ 'admin','HOD','WD','SA' ]
     //       }
     // )
-    setUser(
-        {designation: "student",
-            email: "nadeemblayparambil@gmail.com",
-            is_admin:false,
-            mobile_no: "+917736070884",
-            name: "student1",
-            password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
-            roles:  ['ms', 'md'],
-            stage: "inmate",
-            hostel: 'LH',
-            user_id: "4"}
-    )
-    // setAuthenticating(true)
-    // setLoading(true)
-    // console.log("Im inside useffect isauthenticated")
+    // setUser(
+    //     {designation: "student",
+    //         email: "nadeemblayparambil@gmail.com",
+    //         is_admin:false,
+    //         mobile_no: "+917736070884",
+    //         name: "student1",
+    //         password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
+    //         roles:  ['ms', 'md'],
+    //         stage: "inmate",
+    //         hostel: 'LH',
+    //         user_id: "4"}
+    // )
+    setAuthenticating(true)
+    setLoading(true)
+    console.log("Im inside useffect isauthenticated")
    
-    // axios.get(`${baseUrl}/auth/isAuthenticated`,{
-    //     withCredentials: true
-    // })
-    // .then(function (response) {
+    axios.get(`${baseUrl}/auth/isAuthenticated`,{
+        withCredentials: true
+    })
+    .then(function (response) {
 
-    //     setAuthenticating(false)
-    //     setLoading(false)
+        setAuthenticating(false)
+        setLoading(false)
 
-    //     console.log("success" , response ,"response.data");
-    //     if(response.data!="")
-    //     {        console.log(response.data)
-    //         setUser(response.data)}
+        console.log("success" , response ,"response.data");
+        if(response.data!='')
+        {        console.log(response.data)
+            setUser(response.data)}
+        else{
+            setUser(null)
+            console.log("errr");
+        } 
 
-    //     else 
-    //       setUser(null)
-    // })
-    // .catch(function (error) {
-    //     setAuthenticating(false)
-    //     setLoading(false)
-    //     console.log("FAILED!!! ",error);
-    // });
+    })
+    .catch(function (error) {
+        setAuthenticating(false)
+        setLoading(false)
+        console.log("FAILED!!! ",error);
+    });
   }, [])
   
   return (
@@ -137,8 +142,10 @@ function App() {
       <UserContext.Provider value={{user,setUser,loading,setLoading}}>
       <BrowserRouter>
         <Routes>
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/set-new-password" element={<SetNewPasswordPage/>}/>
+        {user!=null  && (<Route path="/change-password" element={<ChangePassword/>}/>)}
           {user===null&&(<Route path="/" element={<LandingPage/>}/>)}
-          {user===null&&(<Route path="/athira" element={<Athira/>}/>)}
           {user==null&&(<Route path="/login" element={<LoginPage/>}/>)}
           {user==null&&(<Route path="/signup" element={<SignUpPage/>}/>)}
           {user==null&&(<Route path="/facultysignup" element={<FacultySignUp/>}/>)}

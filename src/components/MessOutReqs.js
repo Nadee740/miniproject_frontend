@@ -6,13 +6,14 @@ import { baseUrl } from "../baseUrl";
 import { UserContext } from "../Contexts/UserContext";
 import * as FileSaver from 'file-saver';
 import XLSX from 'sheetjs-style';
-function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, maxNoofDays, setMaxNoofDays,maxNoofDaysMonth,setNoofDaysMonth }) {
+function MessOutReqs({selectedHostel,setSelectedHostel,messoutpredaysk,setMessoutpredaysk,noofDays, setNoofDays, maxNoofDays, setMaxNoofDays,maxNoofDaysMonth,setNoofDaysMonth }) {
   const {user}=useContext(UserContext)
     var date = new Date();
   var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
   const [selectedDate, setSelectedDate] = useState(dateFormat);
   const [messreqs, setMessreqs] = useState([]);
   const [tabSelected, setTabSelected] = useState(1);
+  const [isEditKpred,setisEditKpred]=useState(false)
   const [isEdit, setIsEdit] = useState(false);
   const [isMaxEdit, setIsMaxEdit] = useState(false);
   const [isMaxmonthEdit,setIsMaxmonthedit]=useState(false);
@@ -47,6 +48,19 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
   //     })
   //   }, [selectedHostel])
 
+
+  const submitHandlerMessoutk = (e) => {
+    e.preventDefault();
+    setisEditKpred(!isEditKpred);
+    axios
+      .put(`${baseUrl}/inmate/messoutpredaysk?hostel=${selectedHostel}`, {
+        noofDays: messoutpredaysk,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     setIsEdit(!isEdit);
@@ -72,7 +86,7 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
   };
   const submitMaximumNoofDaysInMonth = (e) => {
     e.preventDefault();
-    setIsMaxEdit(!isMaxEdit);
+    setIsMaxmonthedit(!isMaxmonthEdit);
     axios
       .put(`${baseUrl}/inmate/messoutmaximumdays-month?hostel=${selectedHostel}`, {
         noofDays: maxNoofDaysMonth,
@@ -132,6 +146,42 @@ function MessOutReqs({selectedHostel,setSelectedHostel,noofDays, setNoofDays, ma
           }}>
             Download as Excel
           </button>
+        </div>
+        <div className="flex items-center mt-5 mb-5">
+          <p className="font-semibold">
+            Minimum Number of Days Before next mess out:
+            {isEditKpred ? (
+              <input
+                type="number"
+                min="0"
+                max="100"
+                className="border-solid border-2 rounded-lg ml-3 p-1 w-20"
+                value={messoutpredaysk}
+                onChange={(e) => {
+                  setMessoutpredaysk(e.target.value);
+                }}
+              />
+            ) : (
+              <span className="ml-3">{messoutpredaysk}</span>
+            )}
+          </p>
+          {!isEditKpred  ? (
+            <button
+              className="submit-button-black ml-5"
+              onClick={() => {
+                setisEditKpred(!isEditKpred)
+              }}
+            >
+              <EditIcon /> Edit
+            </button>
+          ) : (
+            <button
+              className="submit-button-black text-sm ml-5"
+              onClick={submitHandlerMessoutk }
+            >
+              <CheckIcon className="text-sm" /> Confirm
+            </button>
+          )}
         </div>
 
         <div className="flex items-center mt-5 mb-5">

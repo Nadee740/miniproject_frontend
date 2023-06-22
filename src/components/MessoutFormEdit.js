@@ -6,6 +6,7 @@ import AlertDialog from './AlertDialog';
 import ConfirmDialog from './ConfirmDialog';
 import { baseUrl } from "../baseUrl";
 function MessOutFormEdit({editPrevFromDate,seteditPrevData,editPrevToDate,noofDays,messOutHistory,setMessOutHistory,setIsEmpty,setNoofDays}) {
+    
     const dateConverter = (inputdate) => {
         const date = new Date(inputdate);
         let month = (date.getMonth() + 1).toString();
@@ -27,12 +28,14 @@ function MessOutFormEdit({editPrevFromDate,seteditPrevData,editPrevToDate,noofDa
     const [days,setDays]=useState(0)
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
+    const [cancelMessoutCheck,setCancelMesssoutcheck]=useState(false);
     const {user,setLoading} = useContext(UserContext)
     
  
 
     const submitForm = ()=>{
         setLoading(true)
+        console.log(editPrevFromDate,editPrevToDate,fromDate,toDate)
         axios.post(`${baseUrl}/inmate/editprevmessoutdata`,{
             user_id:user.user_id,
             prevfromdate:editPrevFromDate,
@@ -42,6 +45,23 @@ function MessOutFormEdit({editPrevFromDate,seteditPrevData,editPrevToDate,noofDa
                 }).then((res)=>{
                     const messOutHistorydata=messOutHistory.filter(messout=>messout.fromdate!=editPrevFromDate)
                     setMessOutHistory([...messOutHistorydata, res.data.data[0]]);
+                    // setMessOutHistory([...messOutHistory,res.data.rows[0]])
+                    setIsEmpty(false)
+                    setFromDate("")
+                    setToDate("")
+                    seteditPrevData(false)
+                    setLoading(false)
+                })
+    }
+    const submitCancelMessout=(req,res)=>{
+        alert("hello")
+        setLoading(true)
+        axios.post(`${baseUrl}/inmate/cancelMessout`,{
+            user_id:user.user_id,
+            fromDate:fromDate,
+            toDate:toDate
+                }).then((res)=>{
+                    const messOutHistorydata=messOutHistory.filter(messout=>messout.fromdate!=fromDate )
                     // setMessOutHistory([...messOutHistory,res.data.rows[0]])
                     setIsEmpty(false)
                     setFromDate("")
@@ -69,6 +89,7 @@ function MessOutFormEdit({editPrevFromDate,seteditPrevData,editPrevToDate,noofDa
         e.preventDefault();
         var fdate=new Date(fromDate)
         var tdate=new Date(toDate)
+        var days = (tdate.getTime() - fdate.getTime()) / (1000 * 3600 * 24) + 1;
         if(fdate.getTime()>tdate.getTime()){
             setModalHeading("Invalid Date")
             setModalText("Check the dates entered.")
@@ -80,22 +101,35 @@ function MessOutFormEdit({editPrevFromDate,seteditPrevData,editPrevToDate,noofDa
                 setOpen2(true)
             }
         }
+        const cancelMessout=()=>{
+            var fdate=new Date(fromDate)
+            var tdate=new Date(toDate);
+            setModalHeading("Confirmation")
+            setModalText("You have applied for cancel messout . Do you want to confirm?")
+            setCancelMesssoutcheck(true);
+            setOpen2(true)
+            
+        }
         
     return (
         <div className='mb-3'>
             <h2 className='font-semibold text-lg mb-2'>Apply for Mess Out</h2>
             <form onSubmit={submitHandler}>
                 <div className='grid grid-cols-2 w-6/12 gap-4 mb-3'>
-                    <label htmlFor="">Period of Leave From:</label>  <input min={fromDate} type="date"  value={fromDate} onChange={(e)=>{setFromDate(e.target.value)}} className="w-full py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none" required/>
+                    <label htmlFor="">Period of Leave From:</label>  <input min={fromDate} max={toDate} type="date"  value={fromDate} onChange={(e)=>{setFromDate(e.target.value)}} className="w-full py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none" required/>
                     <label htmlFor="">To:</label> <input type="date" min={fromDate} max={toDate} value={toDate} onChange={(e)=>{setToDate(e.target.value)}} className="w-full py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none" required/>
                 </div>
                 <p className="flex items-center"><InfoIcon className="text-sm mr-1"/> Minimum {noofDays} days of leave is required for Mess Out</p>
+               
                 <div className="w-full flex items-end justify-end mt-5">
                     <button type="submit" className="ml-auto p-3 bg-stone-800 text-white rounded-xl">Submit</button>
                 </div>
+                <div className="w-full flex items-end justify-end mt-5">
+                    <button type="button" onClick={cancelMessout} className="ml-auto p-3 bg-stone-800 text-white rounded-xl">Cancel Mess out</button>
+                </div>
             </form>
             <AlertDialog open={open1} setOpen={setOpen1} modalHeading={modalHeading} modalText={modalText}/>
-            <ConfirmDialog open={open2} setOpen={setOpen2} modalHeading={modalHeading} modalText={modalText} confirmFunction={submitForm}/>
+            <ConfirmDialog open={open2} setOpen={setOpen2} modalHeading={modalHeading} modalText={modalText} confirmFunction={cancelMessoutCheck?submitCancelMessout:submitForm}/>
             
         </div>
 

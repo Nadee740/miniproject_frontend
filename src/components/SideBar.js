@@ -174,12 +174,16 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
                 <div className='flex flex-col justify-end h-full w-full mb-3'>
                     {/* <hr className='h-px bg-stone-800 w-full' /> */}
                     <div className='w-full px-2'>
+                    <Link to="/change-password">
                         <div className='flex flex-row space-x-4 justify-self-start items-center px-2 py-2'>
+                          
                             <div className='text-black'>
                                 <img src={keySvg} />
                             </div>
+                           
                             <div className='py-2'>Change Password</div>
                         </div>
+                        </Link>
 
                         <div className='flex flex-row space-x-4 justify-self-start items-center px-2 py-2'>
                             <div className='text-black'>

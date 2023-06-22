@@ -7,6 +7,7 @@ import { UserContext } from '../../Contexts/UserContext';
 function MessPage() {
   const {user}=useContext(UserContext)
   const [tabSelected, setTabSelected] = useState(1)
+  const [noofkdaybefore,setnoofkdaybefore]=useState(0);
   const [noofDays,setNoofDays]=useState(0)
   const [noofMaxmessoutDays,setnoofMaxmessoutDays]=useState(0);
   const [noOfMaxMessOutsinMonth,setnoOfMaxMessOutsinMonth]=useState(0);
@@ -49,7 +50,7 @@ function MessPage() {
           {/* {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>} */}
           <br />
         </div>
-        {tabSelected===1?<MessBill/>:<MessOutPage noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}
+        {tabSelected===1?<MessBill/>:<MessOutPage noofkdaybefore={noofkdaybefore} setnoofkdaybefore={setnoofkdaybefore} noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}
       </motion.div>
     </div>
   )

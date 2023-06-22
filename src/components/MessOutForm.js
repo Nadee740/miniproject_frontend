@@ -6,7 +6,8 @@ import AlertDialog from "./AlertDialog";
 import ConfirmDialog from "./ConfirmDialog";
 import { baseUrl } from "../baseUrl";
 function MessOutForm({
-  noofDays,
+    noofkdaybefore,
+    noofDays,
   noofMaxmessoutDays,
   noOfMaxMessOutsinMonth,
   messOutHistory,
@@ -182,7 +183,7 @@ function MessOutForm({
   const getToday = () => {
     const date = new Date();
     let month = (date.getMonth() + 1).toString();
-    let day = (date.getDate() + 1).toString();
+    let day = (date.getDate() + noofkdaybefore).toString();
     let year = date.getFullYear();
     if (month.length < 2) {
       month = "0" + month;
@@ -292,14 +293,22 @@ function MessOutForm({
         hostel:user.hostel
       })
       .then((res) => {
-        const messOutHistorydata=messOutHistory.filter(messout=>messout.fromdate!=fromDate && messout.toDate!=toDate)
-        setMessOutHistory([...messOutHistorydata, res.data.data[0]]);
-       setFromDate(res.data.data[0].fromdate)
-       setMessoutFromdate(res.data.data[0].fromdate)
-       setToDate(res.data.data[0].todate);
-       console.log(messOutHistory);
-       console.log(res.data.data)
+        if(res.data.status=="ok")
+        {
+            const messOutHistorydata=messOutHistory.filter(messout=>messout.fromdate!=fromDate && messout.toDate!=toDate)
+            setMessOutHistory([...messOutHistorydata, res.data.data[0]]);
+           setFromDate(res.data.data[0].fromdate)
+           setMessoutFromdate(res.data.data[0].fromdate)
+           setToDate(res.data.data[0].todate);
+    
+        }
+        else{
+            setModalHeading("Invalid Date");
+            setModalText("You cannot apply messout for the given date");
+            setOpen1(true);
 
+        }
+   
        setLoading(false)
       })
   }
@@ -312,7 +321,7 @@ function MessOutForm({
       setModalText("Check the dates entered.");
       setOpen1(true);
     } 
-    else if((tdate-fdate)/(1000 * 3600 * 24)+1<noofDays)
+    else if((tdate-fdate)/(1000 * 3600 * 24)<noofDays)
           {
             setModalHeading("Invalid Date");
             setModalText("You cannot apply messout for the given date");
@@ -485,7 +494,7 @@ function MessOutForm({
                 className="w-12/12 py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none"
                 min={getToday()}
               />
-                <label htmlFor="">Mess out To:</label>{" "}
+                <label htmlFor="">Mess in From:</label>{" "}
               <input
                 type="date"
                 min={dateConverter(editedMessoutFromdate)}

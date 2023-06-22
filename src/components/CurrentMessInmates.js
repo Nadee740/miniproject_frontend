@@ -17,7 +17,6 @@ const CurrentMessInmates = (props)=>{
     setLoading(true)
     axios.get(`${baseUrl}/inmate/viewmessinmates?date=${selectedDate}&&hostel=${selectedHostel}`)
     .then(res=>{
-      console.log(res.data)
       props.setInmates(res.data)
       setLoading(false)
     })
