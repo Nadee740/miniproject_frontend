@@ -1,9 +1,28 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import RankList from '../../components/RankList'
 import {motion} from 'framer-motion'
 import DoneIcon from '@mui/icons-material/Done';
+import MessExpenseList from '../Sergeant/MessExpenseList';
+import axios from 'axios';
+import { UserContext } from '../../Contexts/UserContext';
+import { baseUrl } from '../../baseUrl';
 function AdmissionHostelOffice() {
   const [modal, setModal] = useState(null) //modal showing columns
+
+  const [suppliers,setSuppliers]=useState([]);
+  const {setLoading } = useContext(UserContext)
+  useEffect(()=>{
+    setLoading(true);
+    axios.get(`${baseUrl}/warden/get-supplier-list`).then((res)=>{
+    console.log(res.data)
+    setSuppliers(res.data.data)
+    setLoading(false)
+    }).catch((er)=>{
+   console.log(er)
+   setLoading(false)
+    })
+      
+  },[])
   const backdropClickHandler = (event) => {
     if (event.target === event.currentTarget) {
         setModal(null)
@@ -209,6 +228,15 @@ function AdmissionHostelOffice() {
                   <div>Waiting List </div>
                   <div className={tabSelected===2?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
+              <div
+                className='ml-5 cursor-pointer '
+                onClick={()=>{
+                  setTabSelected(3)
+                }}
+              >
+                  <div>Mess Expense </div>
+                  <div className={tabSelected===3?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
+              </div>
 
               <div>
               
@@ -281,6 +309,7 @@ function AdmissionHostelOffice() {
               ))}
           </table>
           </div>}
+           {tabSelected===3&&<MessExpenseList suppliers={suppliers} setSuppliers={setSuppliers}/>}
           {/* {tabSelected===3&& <div className='w-11/12'>
           <table className='w-full relative table-auto'>
               <tr className='rounded-xl p-3 bg-primary text-center'>

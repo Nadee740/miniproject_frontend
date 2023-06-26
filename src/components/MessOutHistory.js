@@ -101,7 +101,7 @@ function MessOutHistory({setEditPrevToDate,setEditPrevFromDate,seteditPrevData,m
                  <tr className='rounded-xl p-3 bg-primary text-center'>
                    <th className='p-3'>Sl.No</th>
                    <th className='p-3'>From Date</th>
-                   <th className='p-3'>To Date</th>
+                   <th className='p-3'>Mess in Date</th>
                    <th className='p-3'>Number of Days</th>
                    <th className='p-3'>Edit</th>
                  </tr>
@@ -123,7 +123,7 @@ function MessOutHistory({setEditPrevToDate,setEditPrevFromDate,seteditPrevData,m
                       <td className='p-3'>{index+1}</td>
                       <td className='p-3'>{actualfdate}</td>
                       <td className='p-3'>{user.showtodate?actualtdate:""}</td>
-                      <td className='p-3'>{user.showtodate?((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24))+1:""}</td>
+                      <td className='p-3'>{user.showtodate?((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24)):""}</td>
                       <td className='p-3'>{user.showtodate?CheckDate()<tdate.getTime()&& today()>tdate.getTime()?<button className="submit-button-black" onClick={()=>{
                         seteditPrevData(true)
                         setEditPrevFromDate(fdate);

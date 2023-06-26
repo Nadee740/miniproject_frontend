@@ -33,8 +33,8 @@ function MessOutForm({
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3,setOpen3]=useState(false);
-
-  const { user, setLoading } = useContext(UserContext);
+const { user, setLoading } = useContext(UserContext);
+  
   
   const dateConverter = (inputdate) => {
     const date = new Date(inputdate);
@@ -217,7 +217,7 @@ function MessOutForm({
     let date,daysadd;
     const today = new Date();
     const messoutfromdate = new Date(MessoutFromdate);
-    noofDays==0?daysadd=1:daysadd=noofDays
+    noofDays==0?daysadd=1:daysadd=noofDays+1
     const messinMinDate = new Date(
       messoutfromdate.setDate(messoutfromdate.getDate() + daysadd- 1 )
     );    // today < messinMinDate ? (date = messinMinDate) : (date = today);
@@ -452,7 +452,7 @@ function MessOutForm({
         </div>:""
         }
             <div className="grid grid-cols-2 w-100 gap-4 mb-3 mt-5">
-                 <label htmlFor="">To:</label>{" "}
+                 <label htmlFor="">Mess in from:</label>{" "}
               <input
                 type="date"
                 value={toDate}

@@ -1,24 +1,33 @@
 import React, { useState,useEffect, useContext } from 'react'
 import axios from 'axios'
-import MessOutPage from '../../components/MessOutPage';
-import MessBill from '../../components/MessBill'
 import {motion} from 'framer-motion'
+import AddPerDayMessExpense from './AddPerDayMessExpense';
+import MessExpenseList from './MessExpenseList';
 import { UserContext } from '../../Contexts/UserContext';
-function MessPage() {
-  const {user}=useContext(UserContext)
-  const [tabSelected, setTabSelected] = useState(2)
-  const [noofkdaybefore,setnoofkdaybefore]=useState(0);
-  const [noofDays,setNoofDays]=useState(0)
-  const [noofMaxmessoutDays,setnoofMaxmessoutDays]=useState(0);
-  const [noOfMaxMessOutsinMonth,setnoOfMaxMessOutsinMonth]=useState(0);
-
+import { baseUrl } from '../../baseUrl';
+function MessExpensePage() {
+  const [tabSelected, setTabSelected] = useState(1)
+  const [suppliers,setSuppliers]=useState([]);
+  const {setLoading } = useContext(UserContext)
+  useEffect(()=>{
+    setLoading(true);
+    axios.get(`${baseUrl}/warden/get-supplier-list`).then((res)=>{
+    console.log(res.data)
+    setSuppliers(res.data.data)
+    setLoading(false)
+    }).catch((er)=>{
+   console.log(er)
+   setLoading(false)
+    })
+      
+  },[])
   return (
     <div className='flex flex-col w-full items-center min-h-screen h-full overflow-y-scroll'>
       <div className='flex flex-row justify-between w-11/12 pt-4 items-center'>
-        <div className='text-xl font-bold'>Mess</div>
+        <div className='text-xl font-bold'>Mess Expenses</div>
         <div className='flex flex-row space-x-4 items-center'>
             <div className='bg-white border rounded-full w-10 aspect-square'/>
-            <div>{user.name}</div>
+           
         </div>
       </div>
 
@@ -26,15 +35,15 @@ function MessPage() {
         {/* white box nav bar */}
         <div className='flex flex-row justify-between w-11/12 items-center'>
           <div className='flex flex-row tex-black text-sm font-bold relative'>
-              {/* <div
+              <div
                 className='cursor-pointer '
                 onClick={()=>{
                   setTabSelected(1)
                 }}
               >
-                  <div>Mess Bill</div>
+                  <div>Add Expenses</div>
                   <div className={tabSelected===1?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
-              </div> */}
+              </div>
 
               <div 
                 className='ml-5 cursor-pointer'
@@ -42,7 +51,7 @@ function MessPage() {
                   setTabSelected(2)
                 }}
               >
-                <div>Mess in/Mess out</div>
+                <div>Expense List</div>
                 <div className={tabSelected===2?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
           </div>
@@ -50,10 +59,10 @@ function MessPage() {
           {/* {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>} */}
           <br />
         </div>
-        {tabSelected===1?<MessBill/>:<MessOutPage noofkdaybefore={noofkdaybefore} setnoofkdaybefore={setnoofkdaybefore} noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}
+        {tabSelected===1?<AddPerDayMessExpense suppliers={suppliers} setSuppliers={setSuppliers}/>:<MessExpenseList suppliers={suppliers} setSuppliers={setSuppliers}/>}
       </motion.div>
     </div>
   )
 }
 
-export default MessPage
+export default MessExpensePage

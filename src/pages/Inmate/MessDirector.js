@@ -9,6 +9,8 @@ import axios from 'axios'
 import { baseUrl } from '../../baseUrl'
 import { UserContext } from '../../Contexts/UserContext'
 import MessAttendance from '../../components/MessAttendance'
+import AddPerDayMessExpense from '../Sergeant/AddPerDayMessExpense'
+import MessExpenseList from '../Sergeant/MessExpenseList'
 function MessDirector() {
  const {user}=useContext(UserContext)
   const [selectedHostel,setSelectedHostel]=useState('MH');
@@ -19,7 +21,20 @@ function MessDirector() {
   const [maxNoofDaysMonth,setNoofDaysMonth]=useState(0);
   const [inmates, setInmates] = useState([])
   const [allInmates,setAllInmates]=useState([])
-
+  const [suppliers,setSuppliers]=useState([]);
+  const {setLoading } = useContext(UserContext)
+  useEffect(()=>{
+    setLoading(true);
+    axios.get(`${baseUrl}/warden/get-supplier-list`).then((res)=>{
+    console.log(res.data)
+    setSuppliers(res.data.data)
+    setLoading(false)
+    }).catch((er)=>{
+   console.log(er)
+   setLoading(false)
+    })
+      
+  },[])
   useEffect(() => {
     if(user.stage=='inmate')
     {
@@ -72,7 +87,7 @@ function MessDirector() {
         </div>
       </div>
 
-      <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.3}}  className='flex flex-col items-center py-8 space-y-4 w-11/12:w-full md mt-8 bg-white rounded-xl'>
+      <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.3}}  className=' flex flex-col items-center py-8 space-y-4 w-3/4 md mt-8  bg-white rounded-xl'>
         {/* white box nav bar */}
         <div className='flex flex-row justify-between w-11/12 items-center'>
           <div className='flex flex-row tex-black text-sm font-bold relative mb-3'>
@@ -110,8 +125,8 @@ function MessDirector() {
                   setTabSelected(4)
                 }}
               >
-                <div>Upload Mess Bill</div>
-                <div className={tabSelected===3?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
+                <div>Upload Mess Expense</div>
+                <div className={tabSelected===4?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
               <div 
                 className='ml-5 cursor-pointer'
@@ -119,8 +134,8 @@ function MessDirector() {
                   setTabSelected(5)
                 }}
               >
-                <div>Mess Dues</div>
-                <div className={tabSelected===4?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
+                <div>Mess Expense List</div>
+                <div className={tabSelected===5?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
           </div>
 
@@ -130,8 +145,8 @@ function MessDirector() {
         {tabSelected===1&&<CurrentMessInmates inmates={inmates} setInmates={setInmates}/>}
         {tabSelected===2&&<MessOutReqs selectedHostel={selectedHostel} setSelectedHostel={setSelectedHostel} messoutpredaysk={messoutpredaysk} setMessoutpredaysk={setMessoutpredaysk} maxNoofDays={maxNoofDays} setMaxNoofDays={setMaxNoofDays} noofDays={noofDays} setNoofDays={setNoofDays} maxNoofDaysMonth={maxNoofDaysMonth} setNoofDaysMonth={setNoofDaysMonth}/>}
         {tabSelected===3&&<MessAttendance allInmates={allInmates} setAllInmates={setAllInmates}/>}
-        {tabSelected===4&&<UploadMessBill/>}
-        {tabSelected===5&&<MessDuesView/>}
+        {tabSelected===4&&<AddPerDayMessExpense suppliers={suppliers} setSuppliers={setSuppliers}/>}
+        {tabSelected===5&&<MessExpenseList suppliers={suppliers} setSuppliers={setSuppliers}/>}
 
       </motion.div>
     </div>

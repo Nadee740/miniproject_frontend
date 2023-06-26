@@ -68,6 +68,9 @@ import { baseUrl } from './baseUrl';
 import ChangePassword from './pages/ChangePassword';
 import ForgotPassword from './pages/ForgotPassword';
 import SetNewPasswordPage from './pages/SetNewPassword';
+import AddPerDayMessExpense from './pages/Sergeant/AddPerDayMessExpense';
+import MessExpensePage from './pages/Sergeant/MessExpensePage';
+import MessExpenseList from './pages/Sergeant/MessExpenseList';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -84,18 +87,18 @@ function App() {
   */
 
   useEffect(() => {
-    // setUser(
-    //     {
-    //         user_id: '1',
-    //         password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
-    //         name: 'nadeem',
-    //         email: 'nadeemblayparambil@gmail.com',
-    //         mobile_no: '773607084',
-    //         designation: 'faculty',
-    //         is_admin: true,
-    //         roles: [ 'admin','HOD','WD','SA' ]
-    //       }
-    // )
+    setUser(
+        {
+            user_id: '1',
+            password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
+            name: 'nadeem',
+            email: 'nadeemblayparambil@gmail.com',
+            mobile_no: '773607084',
+            designation: 'faculty',
+            is_admin: true,
+            roles: [ 'admin','HOD','WD','SA','MTRN','SG','HO' ]
+          }
+    )
     // setUser(
     //     {designation: "student",
     //         email: "nadeemblayparambil@gmail.com",
@@ -108,33 +111,33 @@ function App() {
     //         hostel: 'LH',
     //         user_id: "4"}
     // )
-    setAuthenticating(true)
-    setLoading(true)
-    console.log("Im inside useffect isauthenticated")
+    // setAuthenticating(true)
+    // setLoading(true)
+    // console.log("Im inside useffect isauthenticated")
    
-    axios.get(`${baseUrl}/auth/isAuthenticated`,{
-        withCredentials: true
-    })
-    .then(function (response) {
+    // axios.get(`${baseUrl}/auth/isAuthenticated`,{
+    //     withCredentials: true
+    // })
+    // .then(function (response) {
 
-        setAuthenticating(false)
-        setLoading(false)
+    //     setAuthenticating(false)
+    //     setLoading(false)
 
-        console.log("success" , response ,"response.data");
-        if(response.data!='')
-        {        console.log(response.data)
-            setUser(response.data)}
-        else{
-            setUser(null)
-            console.log("errr");
-        } 
+    //     console.log("success" , response ,"response.data");
+    //     if(response.data!='')
+    //     {        console.log(response.data)
+    //         setUser(response.data)}
+    //     else{
+    //         setUser(null)
+    //         console.log("errr");
+    //     } 
 
-    })
-    .catch(function (error) {
-        setAuthenticating(false)
-        setLoading(false)
-        console.log("FAILED!!! ",error);
-    });
+    // })
+    // .catch(function (error) {
+    //     setAuthenticating(false)
+    //     setLoading(false)
+    //     console.log("FAILED!!! ",error);
+    // });
   }, [])
   
   return (
@@ -185,6 +188,7 @@ function App() {
             {/* Warden Routes */}
             <Route path="/WD" element={<WardenHome/>}>
               <Route index element={<HostelAdmission/>}/>
+              <Route path="mess-expense" element={<MessExpensePage/>}/>
               <Route path="admission" element={<HostelAdmission/>}/>
               <Route path="hostelregistry" element={<HostelRegistry/>}/>
               <Route path="applications" element={<ViewApplications/>}/>
@@ -192,7 +196,7 @@ function App() {
             </Route>
 
             <Route path="/SG" element={<SergeantHome/>}>
-              <Route index element={<ViewComplaints/>}/>
+              <Route index element={<MessExpensePage/>}/>
               <Route path="complaints" element={<ViewComplaints/>}/>
             </Route>
 
@@ -229,6 +233,7 @@ function App() {
             <Route path="certificates" element={<CertificatePage/>}/>
             <Route path="noninmatecertificate" element={<NonInmateCertificate/>}/>
             <Route path="messsec" element={<MessSecretary/>}/>
+            <Route path="mess-expense" element={<MessExpensePage/>}/>
             <Route path="messdirector" element={<MessDirector/>}/>
             <Route path="hostel" element={<HostelPage/>}/>
             <Route path="apply-messout" element={<ApplyMessout/>}/>
@@ -246,9 +251,10 @@ function App() {
           {authenticating==false&&(<Route path="*" element={<Page404/>}/>)}
 
           {/* Matron Routes */}
-          <Route path="matron" element={<MatronHome/>}>
+          <Route path="MTRN" element={<MatronHome/>}>
             <Route index element={<MessBillPage/>}/>
             <Route path="messbill" element={<MessBillPage/>}/>
+            <Route path="mess-expense-list" element={<MessExpenseList/>}/>
             <Route path="messoutlist" element={<MessOutListPage/>}/>
             <Route path="uploadmessbill" element={<UploadMessBillPage/>}/>
           </Route>

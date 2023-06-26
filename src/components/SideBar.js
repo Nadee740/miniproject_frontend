@@ -41,7 +41,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { FactCheckSharp, ViewSidebar } from '@mui/icons-material';
 function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole}) {
-   const {user,setUser}=useContext(UserContext)
+     const {user}=useContext(UserContext)
     const [activeIndex, setActiveIndex] = useState(-1)
 
     const [links, setLinks] = useState(myLinks)

@@ -13,6 +13,7 @@ import { hostelOfficeLinks } from './HostelOffice/HostelOfficeLinks'
 import { hodLinks } from './HOD/HODLinks'
 import { sergeantLinks } from './Sergeant/SergeantLinks'
 import { UserContext } from '../Contexts/UserContext'
+import { matronLinks } from './Matron/MatronLinks'
 // import { studentLinks } from './Student/StudentLinks'
 
 function CommonHome() {
@@ -93,6 +94,11 @@ function CommonHome() {
             // setRoleTo("warden")
             console.log("new links : ",hostelOfficeLinks)
             setLinks(hostelOfficeLinks.map(item=>({...item})))
+        }
+        else if(role==="MTRN"){
+            // setRoleTo("warden")
+            console.log("new links : ",hostelOfficeLinks)
+            setLinks(matronLinks.map(item=>({...item})))
         }
         else if(user.roles[role]==="SG"){
             // setRoleTo("warden")
