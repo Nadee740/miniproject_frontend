@@ -17,6 +17,13 @@ function AddPerDayMessExpense({ suppliers, setSuppliers, }) {
 
   const submitForm = (e) => {
     setLoading(true);
+    let Hostel;
+    if(window.location.href.includes("/messsec")){
+        Hostel="LH"
+    }
+    else if(window.location.href.includes("/messdirector")){
+        Hostel="MH"
+    }
     const arr = Particulars.split(",");
     const data = {
       bill_date: billDate,
@@ -24,7 +31,7 @@ function AddPerDayMessExpense({ suppliers, setSuppliers, }) {
       particulars: arr,
       supplier: selectedSupplier,
       bill_amount: BillAmnt,
-      hostel: hostel,
+      hostel: Hostel,
     };
     console.log(selectedSupplier);
     axios

@@ -14,6 +14,7 @@ import { hodLinks } from './HOD/HODLinks'
 import { sergeantLinks } from './Sergeant/SergeantLinks'
 import { UserContext } from '../Contexts/UserContext'
 import { matronLinks } from './Matron/MatronLinks'
+import { ClerkLinks } from './Clerk/ClerkLinks'
 // import { studentLinks } from './Student/StudentLinks'
 
 function CommonHome() {
@@ -90,10 +91,11 @@ function CommonHome() {
             console.log("new links : ",wardenLinks)
             setLinks(wardenLinks.map(item=>({...item})))
         }
-        else if(role==="HO"){
+   
+        else if(role==="CLRK"){
             // setRoleTo("warden")
-            console.log("new links : ",hostelOfficeLinks)
-            setLinks(hostelOfficeLinks.map(item=>({...item})))
+            console.log("new links : ",ClerkLinks)
+            setLinks(ClerkLinks.map(item=>({...item})))
         }
         else if(role==="MTRN"){
             // setRoleTo("warden")

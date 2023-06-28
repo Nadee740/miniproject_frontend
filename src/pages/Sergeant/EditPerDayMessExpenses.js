@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Contexts/UserContext";
 import { baseUrl } from "../../baseUrl";
 import axios from "axios";
-function EditPerDayMessExpense({ setIsEdit,id,suppliers,setSuppliers}) {
+function EditPerDayMessExpense({ getData,setIsEdit,id,suppliers,setSuppliers}) {
   const { setLoading } = useContext(UserContext);
   const [billDate, setBillDate] = useState();
   const [billNo, setBillNo] = useState();
@@ -39,7 +39,6 @@ function EditPerDayMessExpense({ setIsEdit,id,suppliers,setSuppliers}) {
      setSelectedSupplier(res.data.data[0].supplier_id);
      setBillAmnt(res.data.data[0].bill_amount);
 
-
     //  setExpenseList(res.data.data)
      console.log(res.data.data[0].bill_date)
      setLoading(false)
@@ -69,7 +68,9 @@ function EditPerDayMessExpense({ setIsEdit,id,suppliers,setSuppliers}) {
         setLoading(false)
         alert("data added")
         setSubmitted(false);
-        setIsEdit(false)
+       
+        setIsEdit(false);
+        getData()
         setBillAmnt('');
         setBillDate('');
         setBillNo('');

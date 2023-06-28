@@ -5,6 +5,8 @@ import AddPerDayMessExpense from './AddPerDayMessExpense';
 import MessExpenseList from './MessExpenseList';
 import { UserContext } from '../../Contexts/UserContext';
 import { baseUrl } from '../../baseUrl';
+import SupplierList from '../../components/Supplierlist';
+import MessExpenseHistoryStatus from '../../components/MessExpenseHistoryStatus';
 function MessExpensePage() {
   const [tabSelected, setTabSelected] = useState(1)
   const [suppliers,setSuppliers]=useState([]);
@@ -41,7 +43,7 @@ function MessExpensePage() {
                   setTabSelected(1)
                 }}
               >
-                  <div>Add Expenses</div>
+                  <div>Supplier List</div>
                   <div className={tabSelected===1?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
 
@@ -54,12 +56,26 @@ function MessExpensePage() {
                 <div>Expense List</div>
                 <div className={tabSelected===2?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
+
+              <div 
+                className='ml-5 cursor-pointer'
+                onClick={()=>{
+                  setTabSelected(3)
+                }}
+              >
+                <div>Expense Status</div>
+                <div className={tabSelected===3?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
+              </div>
           </div>
 
           {/* {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>} */}
           <br />
         </div>
-        {tabSelected===1?<AddPerDayMessExpense suppliers={suppliers} setSuppliers={setSuppliers}/>:<MessExpenseList suppliers={suppliers} setSuppliers={setSuppliers}/>}
+        {tabSelected===1&&<SupplierList suppliers={suppliers} setSuppliers={setSuppliers}/>}
+
+        {tabSelected===2&&<MessExpenseList paymentinitiated={false} suppliers={suppliers} setSuppliers={setSuppliers}/>}
+
+        {tabSelected===3&&<MessExpenseHistoryStatus paymentinitiated={false} suppliers={suppliers} setSuppliers={setSuppliers}/>}
       </motion.div>
     </div>
   )

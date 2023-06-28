@@ -7,7 +7,7 @@ import axios from 'axios';
 import { UserContext } from '../../Contexts/UserContext';
 import { baseUrl } from '../../baseUrl';
 import SupplierList from '../../components/Supplierlist';
-function AdmissionHostelOffice() {
+function MessExpenseClerk() {
   const [modal, setModal] = useState(null) //modal showing columns
 
   const [suppliers,setSuppliers]=useState([]);
@@ -239,7 +239,6 @@ function AdmissionHostelOffice() {
                   <div>Mess Expense </div>
                   <div className={tabSelected===3?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
-           
               <div
                 className='ml-5 cursor-pointer '
                 onClick={()=>{
@@ -249,15 +248,14 @@ function AdmissionHostelOffice() {
                   <div>Supplier List </div>
                   <div className={tabSelected===4?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
-
               <div
                 className='ml-5 cursor-pointer '
                 onClick={()=>{
                   setTabSelected(5)
                 }}
               >
-                  <div>Payment to process</div>
-                  <div className={tabSelected===5?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
+                  <div>Payment List </div>
+                  <div className={tabSelected===4?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
               <div>
               
@@ -333,8 +331,7 @@ function AdmissionHostelOffice() {
           {tabSelected===3&&<MessExpenseList paymentinitiated={false} suppliers={suppliers} setSuppliers={setSuppliers}/>}
           
           {tabSelected==4&& <SupplierList suppliers={suppliers} setSuppliers={setSuppliers}/>}
-
-          {tabSelected==5&& <MessExpenseList paymentinitiated={true} suppliers={suppliers} setSuppliers={setSuppliers}/>}
+          {tabSelected===5&&<MessExpenseList paymentinitiated={true} suppliers={suppliers} setSuppliers={setSuppliers}/>}
        
           {/* {tabSelected===3&& <div className='w-11/12'>
           <table className='w-full relative table-auto'>
@@ -364,4 +361,4 @@ function AdmissionHostelOffice() {
   )
 }
 
-export default AdmissionHostelOffice
+export default MessExpenseClerk

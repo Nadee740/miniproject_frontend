@@ -4,7 +4,7 @@ function AddPerDayMessExpenseForm({submitted,setSubmitted, billDate,setBillDate,
     const [show,setShow]=useState(false)
     return (
       <div className="flex flex-col  bg-white text-left p-10 rounded-xl">
-          <h2 className="font-bold text-2xl">Add Mess Expenses</h2>
+          <h2 className="font-bold text-2xl">{Particulars&& Particulars.length? "Edit Mess Expenses": "Add Mess Expenses"}</h2>
           <form action="" className="mt-2" >
               <div className="flex flex-col mt-2">
                 <label htmlFor="">Bill Date</label>
@@ -19,13 +19,13 @@ function AddPerDayMessExpenseForm({submitted,setSubmitted, billDate,setBillDate,
                 <label htmlFor="">Particulars</label>
                 <input type="text" className="py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none" placeholder="Enter your name" value={Particulars} onChange={e=>{setParticulars(e.target.value)}}/>
               </div>
-              <div className="flex flex-col mt-2">
+              {/* <div className="flex flex-col mt-2">
                 <label htmlFor="">Hostel</label>
                 <select name="" id="" className="py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none" onChange={e=>{setHostel(e.target.value)}}>
                    <option value='MH'>MH</option>
                    <option value='LH'>LH</option>
                 </select>
-              </div>
+              </div> */}
               <div className="flex flex-col mt-2">
                 <label htmlFor="">Supplier</label>
                 <select name="" id="" className="py-2 px-3 rounded-xl ring-2 ring-slate-300 focus:outline-none" onChange={e=>{

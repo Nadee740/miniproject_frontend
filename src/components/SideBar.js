@@ -219,7 +219,8 @@ function SideBar({myLinks, roles, setRole, myActiveIndex, roleIndex, currentRole
         'WD':'Warden',
         'HO':'Hostel Office',
         'MTRN':'Matron',
-        'SG':'Seargant'
+        'SG':'Seargant',
+        'CLRK':'Clerk'
     }
     
   window.addEventListener('resize',()=>{

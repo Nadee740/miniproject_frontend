@@ -71,6 +71,8 @@ import SetNewPasswordPage from './pages/SetNewPassword';
 import AddPerDayMessExpense from './pages/Sergeant/AddPerDayMessExpense';
 import MessExpensePage from './pages/Sergeant/MessExpensePage';
 import MessExpenseList from './pages/Sergeant/MessExpenseList';
+import ClerkHome from './pages/Clerk/ClerkHome';
+import MessExpenseClerk from './pages/Clerk/MessExpenseClerk';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -96,7 +98,7 @@ function App() {
             mobile_no: '773607084',
             designation: 'faculty',
             is_admin: true,
-            roles: [ 'admin','HOD','WD','SA','MTRN','SG','HO' ]
+            roles: [ 'admin','HOD','WD','SA','MTRN','SG','HO','CLRK' ]
           }
     )
     // setUser(
@@ -200,12 +202,22 @@ function App() {
               <Route path="complaints" element={<ViewComplaints/>}/>
             </Route>
 
+            <Route path="/MTRN" element={<SergeantHome/>}>
+              <Route index element={<MessExpensePage/>}/>
+              <Route path="complaints" element={<ViewComplaints/>}/>
+            </Route>
+
             {/* Hostel Office Routes */}
             <Route path="/HO" element={<HostelOfficeHome/>}>
               <Route index element={<AdmissionHostelOffice/>}/>
               <Route path="admission" element={<AdmissionHostelOffice/>}/>
               <Route path="hostelregistry" element={<HostelRegistry/>}/>
               <Route path="mess" element={<HostelOfficeMess/>}/>
+            </Route>
+
+            <Route path="/CLRK" element={<ClerkHome/>}>
+              <Route index element={<MessExpenseClerk/>}/>
+              <Route path="admission" element={<MessExpenseClerk/>}/>
             </Route>
 
           </Route>
@@ -251,13 +263,13 @@ function App() {
           {authenticating==false&&(<Route path="*" element={<Page404/>}/>)}
 
           {/* Matron Routes */}
-          <Route path="MTRN" element={<MatronHome/>}>
+          {/* <Route path="MTRN" element={<MatronHome/>}>
             <Route index element={<MessBillPage/>}/>
             <Route path="messbill" element={<MessBillPage/>}/>
             <Route path="mess-expense-list" element={<MessExpenseList/>}/>
             <Route path="messoutlist" element={<MessOutListPage/>}/>
             <Route path="uploadmessbill" element={<UploadMessBillPage/>}/>
-          </Route>
+          </Route> */}
           
         </Routes>
       </BrowserRouter>

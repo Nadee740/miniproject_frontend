@@ -4,6 +4,9 @@ import MessOutPage from '../../components/MessOutPage';
 import MessBill from '../../components/MessBill'
 import {motion} from 'framer-motion'
 import { UserContext } from '../../Contexts/UserContext';
+import MessOutList from '../../components/MessOutList';
+import MessOutReqs from '../../components/MessOutReqs';
+import MessOutReqsforToday from '../../components/MessoutReqForToday';
 function MessPage() {
   const {user}=useContext(UserContext)
   const [tabSelected, setTabSelected] = useState(2)
@@ -45,12 +48,23 @@ function MessPage() {
                 <div>Mess in/Mess out</div>
                 <div className={tabSelected===2?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
+              <div 
+                className='ml-5 cursor-pointer'
+                onClick={()=>{
+                  setTabSelected(3)
+                }}
+              >
+                <div>Todays Mess Out</div>
+                <div className={tabSelected===3?'mt-2 h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
+              </div>
           </div>
 
           {/* {tabSelected===1&&<div className='text-sm mb-2'>Showing 1-8 out of 200 results</div>} */}
           <br />
         </div>
-        {tabSelected===1?<MessBill/>:<MessOutPage noofkdaybefore={noofkdaybefore} setnoofkdaybefore={setnoofkdaybefore} noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}
+        {tabSelected===2&&<MessOutPage noofkdaybefore={noofkdaybefore} setnoofkdaybefore={setnoofkdaybefore} noofMaxmessoutDays={noofMaxmessoutDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth} noofDays={noofDays} setNoofDays={setNoofDays}/>}
+      {tabSelected==3&&<MessOutReqsforToday/>}
+      
       </motion.div>
     </div>
   )
