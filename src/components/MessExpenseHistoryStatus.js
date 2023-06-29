@@ -299,7 +299,7 @@ function MessExpenseHistoryStatus({suppliers,setSuppliers,paymentinitiated}) {
             return (
               <tr
               onClick={()=>{
-                    RenderModal(expense,100)
+                    RenderModal(expense,expense.bill_amount)
                 }} 
                 key={index}
                 className={
