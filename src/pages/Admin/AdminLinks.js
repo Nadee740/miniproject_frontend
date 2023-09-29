@@ -63,6 +63,11 @@ const adminLinks=[
       title:"Seat Matrix",
       to:"admin/seatmatrix",
       icon: editSvg,
+    },
+    {
+      title:"View Applications",
+      to:"admin/viewapplication",
+      icon: editSvg
     }
 ]
 

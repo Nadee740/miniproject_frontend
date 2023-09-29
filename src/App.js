@@ -73,6 +73,7 @@ import MessExpensePage from './pages/Sergeant/MessExpensePage';
 import MessExpenseList from './pages/Sergeant/MessExpenseList';
 import ClerkHome from './pages/Clerk/ClerkHome';
 import MessExpenseClerk from './pages/Clerk/MessExpenseClerk';
+import AdminViewApplication from './pages/Admin/AdminViewApplication';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -169,6 +170,7 @@ function App() {
               <Route path="createapplication" element={<CreateApplications/>} />
               <Route path="hostelblocks" element={<HostelBlocks/>} />
               <Route path="seatmatrix" element={<SeatMatrix/>} />
+              <Route path="viewapplication" element={<AdminViewApplication/>} />
             </Route>)}
 
             {/* staffadvisor Routes */}
