@@ -9,7 +9,8 @@ import XLSX from 'sheetjs-style';
 function MessOutReqs({selectedHostel,setSelectedHostel,messoutpredaysk,setMessoutpredaysk,noofDays, setNoofDays, maxNoofDays, setMaxNoofDays,maxNoofDaysMonth,setNoofDaysMonth }) {
   const {user}=useContext(UserContext)
     var date = new Date();
-  var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
+  var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1)< 10 ? "0"+ (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
+  console.log(date.getMonth()>10)
   const [selectedDate, setSelectedDate] = useState(dateFormat);
   const [messreqs, setMessreqs] = useState([]);
   const [tabSelected, setTabSelected] = useState(1);

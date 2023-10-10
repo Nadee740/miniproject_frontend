@@ -50,7 +50,7 @@ function SupplierList({suppliers}) {
                      </svg>
                  </div>
                  <div>
-                 <h1 className='text-center font-bold text-black mb-2'>May 2022 - Messouts</h1>
+                 <h1 className='text-center font-bold text-black mb-2'>Supplier Data</h1>
                 <table className='w-full table-auto'>
                 <tr className='rounded-xl p-3 bg-primary text-center'>
                   <th className='p-3'>Bill Date</th>

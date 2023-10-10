@@ -89,30 +89,30 @@ function App() {
   */
 
   useEffect(() => {
-    setUser(
-        {
-            user_id: '1',
-            password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
-            name: 'nadeem',
-            email: 'nadeemblayparambil@gmail.com',
-            mobile_no: '773607084',
-            designation: 'faculty',
-            is_admin: true,
-            roles: [ 'admin','HOD','WD','SA','MTRN','SG','HO','CLRK' ]
-          }
-    )
     // setUser(
-    //     {designation: "student",
-    //         email: "nadeemblayparambil@gmail.com",
-    //         is_admin:false,
-    //         mobile_no: "+917736070884",
-    //         name: "student1",
-    //         password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
-    //         roles:  ['ms', 'md'],
-    //         stage: "inmate",
-    //         hostel: 'LH',
-    //         user_id: "4"}
+    //     {
+    //         user_id: '1',
+    //         password: '$2a$08$ffVGf5oCXvZVPK4NodMfEO5FKubBdEY4MZLLuwAyWlTgRJypT51FC',
+    //         name: 'nadeem',
+    //         email: 'nadeemblayparambil@gmail.com',
+    //         mobile_no: '773607084',
+    //         designation: 'faculty',
+    //         is_admin: true,
+    //         roles: [ 'admin','HOD','WD','SA','MTRN','SG','HO','CLRK' ]
+    //       }
     // )
+    setUser(
+        {designation: "student",
+            email: "nadeemblayparambil@gmail.com",
+            is_admin:false,
+            mobile_no: "+917736070884",
+            name: "student1",
+            password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
+            roles:  ['ms', 'md'],
+            stage: "inmate",
+            hostel: 'LH',
+            user_id: "4"}
+    )
     // setAuthenticating(true)
     // setLoading(true)
     // console.log("Im inside useffect isauthenticated")

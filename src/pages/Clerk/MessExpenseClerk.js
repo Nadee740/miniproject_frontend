@@ -254,7 +254,7 @@ function MessExpenseClerk() {
                   setTabSelected(5)
                 }}
               >
-                  <div>Payment List </div>
+                  <div>Approved and not Paid Bills </div>
                   <div className={tabSelected===5?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
               <div>

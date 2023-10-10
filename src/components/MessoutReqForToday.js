@@ -9,7 +9,13 @@ import XLSX from 'sheetjs-style';
 function MessOutReqsforToday() {
   const {user}=useContext(UserContext)
     var date = new Date();
-  var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
+    const currentDate = new Date();
+
+    // Format date in yyyy-mm-dd
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const dateFormat=`${year}-${month}-${day}`
   const [messreqs, setMessreqs] = useState([]);
   const { setLoading } = useContext(UserContext);
 

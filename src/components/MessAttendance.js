@@ -5,10 +5,16 @@ import {UserContext} from '../Contexts/UserContext'
 import * as FileSaver from 'file-saver';
 import XLSX from 'sheetjs-style';
 const MessAttendance = (props)=>{
+    console.log(props)
     const {user,setLoading} = useContext(UserContext)
-    var date = new Date();
-    var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1));
-    const [selectedDate, setSelectedDate] = useState(dateFormat);
+    const currentDate = new Date();
+
+    // Format date in yyyy-mm // as attendance is displayed based on month
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+     var formattedDate = `${year}-${month}`;
+ 
+    const [selectedDate, setSelectedDate] = useState(formattedDate);
     const[selectedHostel,setSelectedHostel]=useState("MH");
  
   useEffect(() => {
@@ -72,10 +78,10 @@ const MessAttendance = (props)=>{
             type="month"
           ></input>
         </div>
-        <div className="flex items-center justify-between w-8/12 py-4">
+        {/* <div className="flex items-center justify-between w-8/12 py-4">
           <p className="font-semibold">No Of Requests :</p>
           <p className="font-semibold">{props.allInmates.length} </p>
-        </div>
+        </div> */}
         <div className="flex items-center justify-end mb-5">
           <button className="bg-stone-800 text-white p-2 rounded-lg text-sm mr-5" onClick={()=>{
             downloadExcel()
