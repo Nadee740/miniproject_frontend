@@ -4,6 +4,7 @@ import axios from 'axios'
 import AlertDialog from '../../components/AlertDialog'
 import ConfirmDialog from '../../components/ConfirmDialog'
 import optimizedSearch from '../../components/Search'
+import { baseUrl } from '../../baseUrl'
 
 function AdminInmates() {
   
@@ -42,7 +43,7 @@ function AdminInmates() {
       console.log("first useEffect is called")
       if(tabSelected=="MH" || tabSelected=="LH")
       {
-        axios.get('http://localhost:8080/admin/inmates',{
+        axios.get(`${baseUrl}/admin/inmates`,{
           params:{hostel: tabSelected}
         })
         .then(function (response) {

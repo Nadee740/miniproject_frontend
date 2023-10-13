@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import optimizedSearch from '../../components/Search'
-
+import { baseUrl } from '../../baseUrl'
 function AdminNonInmates() {
   const dummyData=[
     {
@@ -77,7 +77,7 @@ function AdminNonInmates() {
   const [filter, setFilter] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8080/admin/noninmates')
+    axios.get(`${baseUrl}/admin/noninmates`)
     .then(function (response) {
         console.log("success" , response ,"response.data");
         setNonInmatesOriginal(response.data.map(item=>({...item})))

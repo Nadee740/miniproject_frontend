@@ -2,29 +2,49 @@ import axios from 'axios'
 import { useEffect,useContext, useState } from 'react'
 import { baseUrl } from '../baseUrl'
 import {UserContext} from '../Contexts/UserContext'
-const CurrentMessInmates = (props)=>{
+import * as FileSaver from 'file-saver';
+import XLSX from 'sheetjs-style';
+const MessAttendance = (props)=>{
+    console.log(props)
     const {user,setLoading} = useContext(UserContext)
-    var date = new Date();
-    var dateFormat = date.getFullYear() + "-" +((date.getMonth()+1).length != 2 ? "0" + (date.getMonth() + 1) : (date.getMonth()+1)) + "-" + (date.getDate().length != 2 ?"0" + date.getDate() : date.getDate());
-    const [selectedDate, setSelectedDate] = useState(dateFormat);
+    const currentDate = new Date();
+
+    // Format date in yyyy-mm // as attendance is displayed based on month
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+     var formattedDate = `${year}-${month}`;
+ 
+    const [selectedDate, setSelectedDate] = useState(formattedDate);
     const[selectedHostel,setSelectedHostel]=useState("MH");
  
   useEffect(() => {
-    if(user.stage=='inmate')
+    if(window.location.href.includes('inmate'))
     {
         setSelectedHostel(user.hostel)
     }
     setLoading(true)
-    axios.get(`${baseUrl}/inmate/viewmessinmates?date=${selectedDate}&&hostel=${selectedHostel}`)
+    axios.get(`${baseUrl}/warden/get-mess-attendance?hostel=${selectedHostel}&&date=${selectedDate}`)
     .then(res=>{
-      props.setInmates(res.data)
+      console.log(res.data)
+      props.setAllInmates(res.data.data)
       setLoading(false)
     })
   }, [selectedHostel,selectedDate])
+
+  const fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8';
+  const downloadExcel=async()=>{
+        // using Java Script method to get PDF file
+      const ws=XLSX.utils.json_to_sheet(props.allInmates);
+      const wb={Sheets:{'data':ws},SheetNames:['data']};
+      const excelBuffer=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+      const data=new Blob([excelBuffer],{type:fileType});
+      FileSaver.saveAs(data,`Mess Attendance ${selectedDate}.xlsx`)
+    
+  }
     
     return(
      <>
-         <div className="flex items-center justify-between w-4/12 p">
+         <div className="flex items-center justify-between w-100 p">
           {user.stage=="inmate"?<select
             className="p-3 ring-slate-200 ring-2 rounded-xl outline-none"
           >
@@ -45,31 +65,40 @@ const CurrentMessInmates = (props)=>{
             <option value="thirdyear">Third Year</option>
             <option value="fourthyear">Fourth Year</option>
       </select>  */}
+      
         </div>
-        <div className="flex items-center justify-between w-4/12 py-4">
+        <div className="flex items-center justify-between w-9/12 py-4">
     
           <p className="font-semibold">Select Date </p>
           <input
            defaultValue={selectedDate}
             onChange={(e) => {
-               
               setSelectedDate(e.target.value);
             }}
-            type="date"
+            type="month"
           ></input>
         </div>
-        <div className="flex items-center justify-between w-4/12 py-4">
+        {/* <div className="flex items-center justify-between w-8/12 py-4">
           <p className="font-semibold">No Of Requests :</p>
-          <p className="font-semibold">{props.inmates.length} </p>
+          <p className="font-semibold">{props.allInmates.length} </p>
+        </div> */}
+        <div className="flex items-center justify-end mb-5">
+          <button className="bg-stone-800 text-white p-2 rounded-lg text-sm mr-5" onClick={()=>{
+            downloadExcel()
+          }}>
+            Download as Excel
+          </button>
         </div>
         <table className='w-11/12 relative table-auto'>
               <tr className='rounded-xl p-3 bg-primary text-center'>
                 <th className='p-3'>Sl.No</th>
                 <th className='p-3'>Name</th>
                 <th className='p-3'>Hostel Admission No.</th>
+                
+                <th className='p-3'>Attendance.</th>
                 <th className='p-3'>Room No.</th>
               </tr>
-              {props.inmates.map((user, index)=>(
+              {props.allInmates.map((user, index)=>(
                 <tr 
                   key={index}
                   className={'border-b text-center border-slate-200 border-solid hover:bg-gray-300'}
@@ -77,7 +106,8 @@ const CurrentMessInmates = (props)=>{
                   <td className='p-3'>{index+1}</td>
                   <td className='p-3'>{user.name}</td>
                   <td className='p-3'>{user.hostel_admission_no}</td>
-                  <td className='p-3'>{user.block_name} - {user.room_no}</td>
+                  <td className='p-3'>{user.val}</td>
+                  {/* <td className='p-3'>{user.block_name} - {user.room_no}</td> */}
                 </tr>
               ))}
           </table>
@@ -85,4 +115,4 @@ const CurrentMessInmates = (props)=>{
           
     )
 }
-export default CurrentMessInmates
+export default MessAttendance;

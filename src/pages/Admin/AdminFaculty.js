@@ -3,58 +3,10 @@ import {motion} from "framer-motion"
 import axios from 'axios'
 import { UserContext } from '../../Contexts/UserContext'
 import optimizedSearch from '../../components/Search'
+import { baseUrl } from '../../baseUrl'
+
 
 function AdminFaculty() {
-  const dummyData=[
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    },
-    {
-      penNo:"1234",
-      name:"xyz",
-      phone:"9876857465",
-      email:"xyz@gmail.com"
-    }
-  ]
 
   const [facultyOriginal, setFacultyOriginal] = useState([])
   const [faculty, setFaculty] = useState([])
@@ -67,7 +19,7 @@ function AdminFaculty() {
   const [filter, setFilter] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8080/admin/faculties')
+    axios.get(`${baseUrl}/admin/faculties`)
     .then(function (response) {
         console.log("success" , response ,"response.data");
         setFacultyOriginal(response.data.map(item=>({...item})))
@@ -102,7 +54,7 @@ function AdminFaculty() {
   const {setLoading} =useContext(UserContext)
 
   const getAndSetRoles=()=>{
-    axios.get('http://localhost:8080/admin/faculty/getRoles',{
+    axios.get(`${baseUrl}/admin/faculty/getRoles`,{
       params:{
         penNo: faculty[selectedRowIndex].pen_no
       }
@@ -122,7 +74,7 @@ function AdminFaculty() {
 
     setLoading(true)
 
-    axios.post('http://localhost:8080/admin/faculty/postRole',{
+    axios.post(`${baseUrl}/admin/faculty/postRole`,{
       penNo:faculty[selectedRowIndex].pen_no,
       role:role,
       program:program,
@@ -145,7 +97,7 @@ function AdminFaculty() {
     setLoading(true)
 
     console.log("delete role is called")
-    axios.get('http://localhost:8080/admin/faculty/removeRole',{
+    axios.get(`${baseUrl}/admin/faculty/removeRole`,{
       params:{
         penNo:faculty[selectedRowIndex].pen_no,
         role:role

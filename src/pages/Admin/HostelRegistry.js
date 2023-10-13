@@ -3,7 +3,6 @@ import {motion} from "framer-motion"
 import { baseUrl } from '../../baseUrl'
 import axios from 'axios'
 import { UserContext } from '../../Contexts/UserContext'
-
 function HostelRegistry() {
 
   const {setLoading} = useContext(UserContext)

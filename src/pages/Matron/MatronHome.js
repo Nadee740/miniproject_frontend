@@ -19,6 +19,16 @@ function MatronHome() {
           icon: bookSvg,
       },
       {
+        title:"Mess Expense List",
+        to:"mess-expense-list",
+        icon: fitnessSvg,
+    },
+    {
+        title:"Suppliers List",
+        to:"uploadmessbill",
+        icon: fitnessSvg,
+    },
+      {
           title:"Upload mess bill",
           to:"uploadmessbill",
           icon: fitnessSvg,

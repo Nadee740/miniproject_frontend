@@ -1,8 +1,13 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import RankList from '../../components/RankList'
 import {motion} from 'framer-motion'
 import ViewRankList from './ViewRankList'
 import ViewHostelApplications from './ViewHostelApplications'
+import MessExpenseList from '../Sergeant/MessExpenseList'
+import axios from 'axios'
+import { UserContext } from '../../Contexts/UserContext'
+import { baseUrl } from '../../baseUrl'
+import SupplierList from '../../components/Supplierlist'
 function HostelAdmission() {
   const [modal, setModal] = useState(null) //modal showing columns
   const backdropClickHandler = (event) => {
@@ -10,6 +15,20 @@ function HostelAdmission() {
         setModal(null)
     }
   }
+  const [suppliers,setSuppliers]=useState([]);
+  const {setLoading } = useContext(UserContext)
+  useEffect(()=>{
+    setLoading(true);
+    axios.get(`${baseUrl}/warden/get-supplier-list`).then((res)=>{
+    console.log(res.data)
+    setSuppliers(res.data.data)
+    setLoading(false)
+    }).catch((er)=>{
+   console.log(er)
+   setLoading(false)
+    })
+      
+  },[])
 
   useEffect(() => {
     if(modal!=null)
@@ -116,7 +135,7 @@ function HostelAdmission() {
     },
 
   ]
-  const [tabSelected, setTabSelected] = useState(1)
+  const [tabSelected, setTabSelected] = useState(4)
   const [users,setUsers]=useState(applications)
   return (
     <div className='flex flex-col w-full items-center min-h-screen h-full overflow-y-scroll'>
@@ -132,7 +151,7 @@ function HostelAdmission() {
       <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.3}}  className='flex flex-col items-center py-8 space-y-4 w-11/12 mt-8 bg-white rounded-xl'>
       <div className='flex flex-row justify-between w-11/12 items-center'>
           <div className='flex flex-row text-black text-sm font-bold relative mb-3'>
-              <div
+              {/* <div
                 className='cursor-pointer '
                 onClick={()=>{
                   setTabSelected(1)
@@ -140,8 +159,8 @@ function HostelAdmission() {
               >
                   <div>Current Rank List </div>
                   <div className={tabSelected===1?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
-              </div>
-
+              </div> */}
+{/* 
               <div
                 className='ml-5 cursor-pointer '
                 onClick={()=>{
@@ -150,9 +169,9 @@ function HostelAdmission() {
               >
                   <div>Waiting List </div>
                   <div className={tabSelected===2?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 className='ml-5 cursor-pointer '
                 onClick={()=>{
                   setTabSelected(3)
@@ -160,6 +179,24 @@ function HostelAdmission() {
               >
                   <div>Received Applications </div>
                   <div className={tabSelected===3?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
+              </div> */}
+              <div
+                className='ml-5 cursor-pointer '
+                onClick={()=>{
+                  setTabSelected(4)
+                }}
+              >
+                  <div>Expense List </div>
+                  <div className={tabSelected===4?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
+              </div>
+              <div
+                className='ml-5 cursor-pointer '
+                onClick={()=>{
+                  setTabSelected(5)
+                }}
+              >
+                  <div>Supplier List </div>
+                  <div className={tabSelected===5?'mt-2 h-1 self-center w-12/12 bg-stone-800 rounded-full':''}/>
               </div>
 
           </div>
@@ -167,6 +204,8 @@ function HostelAdmission() {
           {tabSelected===1&& <ViewRankList/>}
           {tabSelected===2&& <div>Waiting List</div>}
           {tabSelected===3&& <ViewHostelApplications/>}
+          {tabSelected===4&&<MessExpenseList paymentinitiated={false} suppliers={suppliers} setSuppliers={setSuppliers}/>}
+          {tabSelected===5&&<SupplierList suppliers={suppliers} />}
       </motion.div>
     </div>
   )

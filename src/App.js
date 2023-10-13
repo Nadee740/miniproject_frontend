@@ -64,6 +64,16 @@ import ViewApplications from './pages/Warden/ViewApplications';
 import FacultySignUp from './pages/FacultySignUp'
 import Athira from './pages/Athira';
 import ApplyMessout from './pages/Student/ApplyMessout';
+import MessManagementWarden from './pages/Warden/MessManagement';
+import { baseUrl } from './baseUrl';
+import ChangePassword from './pages/ChangePassword';
+import ForgotPassword from './pages/ForgotPassword';
+import SetNewPasswordPage from './pages/SetNewPassword';
+import AddPerDayMessExpense from './pages/Sergeant/AddPerDayMessExpense';
+import MessExpensePage from './pages/Sergeant/MessExpensePage';
+import MessExpenseList from './pages/Sergeant/MessExpenseList';
+import ClerkHome from './pages/Clerk/ClerkHome';
+import MessExpenseClerk from './pages/Clerk/MessExpenseClerk';
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -89,11 +99,12 @@ function App() {
     //         mobile_no: '773607084',
     //         designation: 'faculty',
     //         is_admin: true,
-    //         roles: [ 'admin','HOD','WD','SA' ]
+    //         roles: [ 'admin','HOD','WD','SA','MTRN','SG','HO','CLRK' ]
     //       }
           
     // )
     setUser(
+<<<<<<< HEAD
       {designation: "student",
           email: "nadeemblayparambil@gmail.com",
           is_admin:false,
@@ -109,6 +120,24 @@ function App() {
     // setLoading(true)
     // console.log("Im inside useffect isauthenticated")
     // axios.get('http://localhost:8080/auth/isAuthenticated',{
+=======
+        {designation: "student",
+            email: "nadeemblayparambil@gmail.com",
+            is_admin:false,
+            mobile_no: "+917736070884",
+            name: "student1",
+            password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
+            roles:  ['ms', 'md'],
+            stage: "inmate",
+            hostel: 'LH',
+            user_id: "4"}
+    )
+    // setAuthenticating(true)
+    // setLoading(true)
+    // console.log("Im inside useffect isauthenticated")
+   
+    // axios.get(`${baseUrl}/auth/isAuthenticated`,{
+>>>>>>> 4b9a3a50cccb7ff8421264d82499ebccb1961f9f
     //     withCredentials: true
     // })
     // .then(function (response) {
@@ -117,10 +146,21 @@ function App() {
     //     setLoading(false)
 
     //     console.log("success" , response ,"response.data");
+<<<<<<< HEAD
     //     if(response.data!="")
     //       setUser(response.data)
     //     else 
     //       setUser(null)
+=======
+    //     if(response.data!='')
+    //     {        console.log(response.data)
+    //         setUser(response.data)}
+    //     else{
+    //         setUser(null)
+    //         console.log("errr");
+    //     } 
+
+>>>>>>> 4b9a3a50cccb7ff8421264d82499ebccb1961f9f
     // })
     // .catch(function (error) {
     //     setAuthenticating(false)
@@ -134,8 +174,10 @@ function App() {
       <UserContext.Provider value={{user,setUser,loading,setLoading}}>
       <BrowserRouter>
         <Routes>
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/set-new-password" element={<SetNewPasswordPage/>}/>
+        {user!=null  && (<Route path="/change-password" element={<ChangePassword/>}/>)}
           {user===null&&(<Route path="/" element={<LandingPage/>}/>)}
-          {user===null&&(<Route path="/athira" element={<Athira/>}/>)}
           {user==null&&(<Route path="/login" element={<LoginPage/>}/>)}
           {user==null&&(<Route path="/signup" element={<SignUpPage/>}/>)}
           {user==null&&(<Route path="/facultysignup" element={<FacultySignUp/>}/>)}
@@ -175,13 +217,20 @@ function App() {
             {/* Warden Routes */}
             <Route path="/WD" element={<WardenHome/>}>
               <Route index element={<HostelAdmission/>}/>
+              <Route path="mess-expense" element={<MessExpensePage/>}/>
               <Route path="admission" element={<HostelAdmission/>}/>
               <Route path="hostelregistry" element={<HostelRegistry/>}/>
               <Route path="applications" element={<ViewApplications/>}/>
+              <Route path="messmanagement" element={<MessSecretary/>}/>
             </Route>
 
             <Route path="/SG" element={<SergeantHome/>}>
-              <Route index element={<ViewComplaints/>}/>
+              <Route index element={<MessExpensePage/>}/>
+              <Route path="complaints" element={<ViewComplaints/>}/>
+            </Route>
+
+            <Route path="/MTRN" element={<SergeantHome/>}>
+              <Route index element={<MessExpensePage/>}/>
               <Route path="complaints" element={<ViewComplaints/>}/>
             </Route>
 
@@ -191,6 +240,11 @@ function App() {
               <Route path="admission" element={<AdmissionHostelOffice/>}/>
               <Route path="hostelregistry" element={<HostelRegistry/>}/>
               <Route path="mess" element={<HostelOfficeMess/>}/>
+            </Route>
+
+            <Route path="/CLRK" element={<ClerkHome/>}>
+              <Route index element={<MessExpenseClerk/>}/>
+              <Route path="admission" element={<MessExpenseClerk/>}/>
             </Route>
 
           </Route>
@@ -219,6 +273,7 @@ function App() {
             <Route path="certificates/nodue" element={<Nodue/>}/>
             <Route path="noninmatecertificate" element={<NonInmateCertificate/>}/>
             <Route path="messsec" element={<MessSecretary/>}/>
+            <Route path="mess-expense" element={<MessExpensePage/>}/>
             <Route path="messdirector" element={<MessDirector/>}/>
             <Route path="hostel" element={<HostelPage/>}/>
             <Route path="apply-messout" element={<ApplyMessout/>}/>
@@ -237,12 +292,13 @@ function App() {
           {authenticating==false&&(<Route path="*" element={<Page404/>}/>)}
 
           {/* Matron Routes */}
-          <Route path="matron" element={<MatronHome/>}>
+          {/* <Route path="MTRN" element={<MatronHome/>}>
             <Route index element={<MessBillPage/>}/>
             <Route path="messbill" element={<MessBillPage/>}/>
+            <Route path="mess-expense-list" element={<MessExpenseList/>}/>
             <Route path="messoutlist" element={<MessOutListPage/>}/>
             <Route path="uploadmessbill" element={<UploadMessBillPage/>}/>
-          </Route>
+          </Route> */}
           
         </Routes>
       </BrowserRouter>

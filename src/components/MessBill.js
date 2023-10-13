@@ -21,8 +21,8 @@ function MessBill() {
          <>
            {/* inmates list */}
            <div className='w-11/12'>
-             <h2 className='font-semibold text-lg mb-2'>Mess Bill</h2>
-             <table className='w-full relative table-auto'>
+             <h2 className='font-semibold text-lg mb-2'>Under Construction</h2>
+             {/* <table className='w-full relative table-auto'>
                  <tr className='rounded-xl p-3 bg-primary text-center'>
                    <th className='p-3'>Sl.No</th>
                    <th className='p-3'>Month</th>
@@ -52,7 +52,7 @@ function MessBill() {
                      <td className='p-3'>{user.dues}</td>
                    </tr>
                  ))}
-             </table>
+             </table> */}
            </div>
          </>
        )

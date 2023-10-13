@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {motion} from "framer-motion" 
 import axios from 'axios'
-
+import { baseUrl } from '../../baseUrl'
 function SeatMatrix() {
 
     const seatMH={
@@ -90,7 +90,7 @@ function SeatMatrix() {
     const [hoverIndex, setHoverIndex] = useState(-1)
 
     const getBlocksData=()=>{
-        axios.get('http://localhost:8080/admin/getBlocks',{
+        axios.get(`${baseUrl}/admin/getBlocks`,{
             params:{
                 hostel: tabSelected==0?"MH":"LH"
             }
@@ -198,7 +198,7 @@ function SeatMatrix() {
     const getRoomsInfo=()=>{
         var hostelData=tabSelected==0?{...seatMHData}:{...seatLHData}
 
-        axios.get('http://localhost:8080/admin/getRoomsInfo',{
+        axios.get(`${baseUrl}/admin/getRoomsInfo`,{
             params:{
                 blockId: blockSelected,
                 floorNo: hostelData[blockSelected].floorData[floorIndexSelected].floorNo
@@ -229,7 +229,7 @@ function SeatMatrix() {
     const updateSeatMatrix=()=>{
         var hostelData=tabSelected==0?{...seatMHData}:{...seatLHData}
 
-        axios.post('http://localhost:8080/admin/updateSeatMatrix',{
+        axios.post(`${baseUrl}/admin/updateSeatMatrix`,{
             roomData:roomData,
             blockId: blockSelected,
             floorNo: hostelData[blockSelected].floorData[floorIndexSelected].floorNo

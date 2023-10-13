@@ -13,6 +13,8 @@ import { hostelOfficeLinks } from './HostelOffice/HostelOfficeLinks'
 import { hodLinks } from './HOD/HODLinks'
 import { sergeantLinks } from './Sergeant/SergeantLinks'
 import { UserContext } from '../Contexts/UserContext'
+import { matronLinks } from './Matron/MatronLinks'
+import { ClerkLinks } from './Clerk/ClerkLinks'
 // import { studentLinks } from './Student/StudentLinks'
 
 function CommonHome() {
@@ -89,10 +91,16 @@ function CommonHome() {
             console.log("new links : ",wardenLinks)
             setLinks(wardenLinks.map(item=>({...item})))
         }
-        else if(role==="HO"){
+   
+        else if(role==="CLRK"){
+            // setRoleTo("warden")
+            console.log("new links : ",ClerkLinks)
+            setLinks(ClerkLinks.map(item=>({...item})))
+        }
+        else if(role==="MTRN"){
             // setRoleTo("warden")
             console.log("new links : ",hostelOfficeLinks)
-            setLinks(hostelOfficeLinks.map(item=>({...item})))
+            setLinks(matronLinks.map(item=>({...item})))
         }
         else if(user.roles[role]==="SG"){
             // setRoleTo("warden")
@@ -104,13 +112,14 @@ function CommonHome() {
     
     return (
         <div className='flex w-full flex-row bg-primary h-screen'>
-            <div className='w-3/12 '>
+        <SideBar myLinks={links} roles={user.roles} setRole={setRole} currentRole={role}/>
+            {/* <div className='w-3/12 '> */}
                 {/* myActiveIndex is the index of the link that should be active*/}
                 {/*myOpenedIndex is the index of the link(with sublinks) that is made open */}
                 {/* roleIndex is the index of the role selected */}
                 {/* roleTo is the route of the home page of the corresponding role */}
-                <SideBar myLinks={links} roles={user.roles} setRole={setRole} currentRole={role}/>
-            </div>
+                {/* <SideBar myLinks={links} roles={user.roles} setRole={setRole} currentRole={role}/>
+            </div> */}
             <Outlet context={[role, setRole]}/>
         </div>
     )

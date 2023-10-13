@@ -19,6 +19,11 @@ const wardenLinks=[
         to:"WD/hostelregistry",
         icon: editSvg,
     },
+    {
+        title:"Mess Management",
+        to:"WD/messmanagement",
+        icon: editSvg,
+    },
 
     {
         title:"Users",

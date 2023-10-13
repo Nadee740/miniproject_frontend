@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import {motion} from "framer-motion" 
 import axios from 'axios'
 import { UserContext } from '../../Contexts/UserContext'
-
+import { baseUrl } from '../../baseUrl'
 function HostelBlocks() {
 
     const seatMH={
@@ -90,7 +90,7 @@ function HostelBlocks() {
   }
 
   const getBlocksData=()=>{
-    axios.get('http://localhost:8080/admin/getBlocks',{
+    axios.get(`${baseUrl}/admin/getBlocks`,{
         params:{
             hostel: tabSelected==0?"MH":"LH"
         }

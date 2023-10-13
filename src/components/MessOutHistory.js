@@ -3,10 +3,10 @@ import { useState,useContext,useEffect } from "react"
 import { baseUrl } from "../baseUrl"
 import { UserContext } from "../Contexts/UserContext"
 import ConfirmDialog from '../components/ConfirmDialog'
-
-function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,setNoofDays}) {
+function MessOutHistory({setEditPrevToDate,setEditPrevFromDate,seteditPrevData,messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,setnoofkdaybefore,setNoofDays,setnoofMaxmessoutDays,setnoOfMaxMessOutsinMonth}) {
 
   const {user,setLoading}=useContext(UserContext)
+
   const [open1, setOpen1] = useState(false);
   const [modalHeading,setModalHeading]=useState("")
   const [modalText,setModalText]=useState("")
@@ -16,14 +16,23 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
   const [tempto,setTempTo]=useState("")
   useEffect(() => {
     setLoading(true)
-    axios.get('http://localhost:8080/inmate/messoutdays')
+
+    // axios.get('http://localhost:8080/inmate/messoutdays')
+    //     .then((res)=>{
+    //       console.log(res.data)
+    //       setNoofDays(res.data[0].value)
+    //     })
+    
+    const url=user.hostel==="MH"?`${baseUrl}/inmate/mess-requirements`:`${baseUrl}/inmate/mess-requirements-LH`;
+        axios.get(url)
         .then((res)=>{
-          console.log(res.data)
-          setNoofDays(res.data[0].value)
+        setnoofkdaybefore(res.data.daysK[0].value)
+        setNoofDays(res.data.min[0].value)
+        setnoofMaxmessoutDays(res.data.max[0].value)
+        setnoOfMaxMessOutsinMonth(res.data.maxinmonth[0].value)
         })
     axios.get(`${baseUrl}/inmate/messouthistory`,{params:{user_id:user.user_id}})
     .then(res=>{
-      console.log(res.data)
       setMessOutHistory(res.data.rows)
       if(res.data.rows.length>0){
         setIsEmpty(false)
@@ -76,6 +85,13 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
     const date=new Date();
     return date.getTime();
   }
+  const CheckDate = ()=>{
+    const date=new Date();
+    date.setDate(date.getDate()-15);
+    console.log(date)
+    return date.getTime();
+  }
+  
    
        return (
          <>
@@ -85,15 +101,20 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
                  <tr className='rounded-xl p-3 bg-primary text-center'>
                    <th className='p-3'>Sl.No</th>
                    <th className='p-3'>From Date</th>
-                   <th className='p-3'>To Date</th>
+                   <th className='p-3'>Mess in Date</th>
                    <th className='p-3'>Number of Days</th>
-                   <th className='p-3'></th>
+                   <th className='p-3'>Edit</th>
                  </tr>
                  {messOutHistory.map((user, index)=>{
                    var fdate=new Date(user.fromdate)
-                   var tdate=new Date(user.todate)
                    var actualfdate=fdate.getDate()+'/'+(fdate.getMonth()+1)+'/'+fdate.getFullYear()
-                   var actualtdate=tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()
+                   if(user.showtodate)
+                   { 
+                    var tdate=new Date(user.todate)                 
+                    var actualtdate=tdate.getDate()+'/'+(tdate.getMonth()+1)+'/'+tdate.getFullYear()
+                    }
+     
+
                    return(
                     <tr 
                       key={index}
@@ -101,11 +122,16 @@ function MessOutHistory({messOutHistory,setMessOutHistory,isEmpty,setIsEmpty,set
                     >
                       <td className='p-3'>{index+1}</td>
                       <td className='p-3'>{actualfdate}</td>
-                      <td className='p-3'>{actualtdate}</td>
-                      <td className='p-3'>{((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24))+1}</td>
-                      <td className='p-3'>{today()<tdate.getTime()?<button className="submit-button-black" onClick={()=>{cancelPress(fdate,tdate,user.fromdate,user.tdate)}}>Cancel</button>:''}</td>
+                      <td className='p-3'>{user.showtodate?actualtdate:""}</td>
+                      <td className='p-3'>{user.showtodate?((tdate.getTime()-fdate.getTime())/(1000 * 3600 * 24)):""}</td>
+                      <td className='p-3'>{user.showtodate?CheckDate()<tdate.getTime()&& today()>tdate.getTime()?<button className="submit-button-black" onClick={()=>{
+                        seteditPrevData(true)
+                        setEditPrevFromDate(fdate);
+                        setEditPrevToDate(tdate)
+                      }}>Edit</button>:'':''}</td>
                     </tr>
-                 )})}
+                 )
+                })}
              </table>}
            </div>
            <ConfirmDialog open={open1} setOpen={setOpen1} modalHeading={modalHeading} modalText={modalText} confirmFunction={()=>{cancelMessOut(cancelFromDate,cancelToDate)}}/>

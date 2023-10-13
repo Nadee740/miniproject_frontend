@@ -4,6 +4,12 @@ import ApplicationList from "../../components/ApplicationList";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../Contexts/UserContext";
+import React, { useState,useEffect, useContext } from 'react'
+import CertificateForm from '../../components/CertificateForm'
+import ApplicationList from '../../components/ApplicationList'
+import {motion} from 'framer-motion'
+import { UserContext } from '../../Contexts/UserContext';
+import { baseUrl } from '../../baseUrl';
 function CertificatePage() {
   const { user } = useContext(UserContext);
   const [activeMenu, setActiveMenu] = useState(null);

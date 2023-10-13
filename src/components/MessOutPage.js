@@ -2,15 +2,25 @@ import {useState,useEffect} from 'react'
 import MessOutForm from "./MessOutForm"
 import MessOutHistory from "./MessOutHistory"
 import axios from 'axios'
-function MessOutPage({noofDays,setNoofDays}) {
+import MessOutFormEdit from './MessoutFormEdit'
+function MessOutPage({noofkdaybefore,setnoofkdaybefore,noofDays,setNoofDays,noofMaxmessoutDays,setnoofMaxmessoutDays,noOfMaxMessOutsinMonth,setnoOfMaxMessOutsinMonth}) {
   const [messOutHistory, setMessOutHistory] = useState([])
   const [isEmpty,setIsEmpty]=useState(true)
+  const [editPrevData,seteditPrevData]=useState(false);
+  const [editPrevFromDate,setEditPrevFromDate]=useState();
+  const [editPrevToDate,setEditPrevToDate]=useState();
+
   return (
-    <div className='w-11/12'>
-        <MessOutForm isEmpty={isEmpty} setIsEmpty={setIsEmpty} noofDays={noofDays} messOutHistory={messOutHistory} setMessOutHistory={setMessOutHistory}/>
+     
+    editPrevData?<div className='w-11/12'>
+    <MessOutFormEdit  setEditPrevFromDate={setEditPrevFromDate} editPrevFromDate={editPrevFromDate} editPrevToDate={editPrevToDate}  seteditPrevData={seteditPrevData} isEmpty={isEmpty} setIsEmpty={setIsEmpty} noofkdaybefore={noofkdaybefore} noofDays={noofDays} noofMaxmessoutDays={noofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} messOutHistory={messOutHistory} setMessOutHistory={setMessOutHistory}/>
+    <hr/>
+</div>:<div className='w-11/12'>
+        <MessOutForm isEmpty={isEmpty} setIsEmpty={setIsEmpty} noofkdaybefore={noofkdaybefore} noofDays={noofDays} noofMaxmessoutDays={noofMaxmessoutDays} noOfMaxMessOutsinMonth={noOfMaxMessOutsinMonth} messOutHistory={messOutHistory} setMessOutHistory={setMessOutHistory}/>
         <hr/>
-        <MessOutHistory isEmpty={isEmpty} setIsEmpty={setIsEmpty} messOutHistory={messOutHistory} setMessOutHistory={setMessOutHistory} setNoofDays={setNoofDays}/>
+        <MessOutHistory setEditPrevFromDate={setEditPrevFromDate} setEditPrevToDate={setEditPrevToDate} editPrevData={editPrevData} seteditPrevData={seteditPrevData} isEmpty={isEmpty} setIsEmpty={setIsEmpty} messOutHistory={messOutHistory} setMessOutHistory={setMessOutHistory} setnoofkdaybefore={setnoofkdaybefore} setNoofDays={setNoofDays} setnoofMaxmessoutDays={setnoofMaxmessoutDays} setnoOfMaxMessOutsinMonth={setnoOfMaxMessOutsinMonth}/>
     </div>
+ 
   )
 }
 
