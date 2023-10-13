@@ -290,6 +290,18 @@ function HostelRegistry() {
                 <div>Ladies Hostel</div>
                 <div className={tabSelected=="LH"?'h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
               </div>
+              
+              <div 
+                className='ml-5 cursor-pointer'
+                onClick={()=>{
+                  setHostelDataSelected(inmateDataLH)
+                  setTabSelected("LH")
+                }}
+              >
+                {/* <div>Ladies Hostel <span className='ml-2 p-2 text-white bg-stone-800 rounded-lg cursor-default'>200</span></div> */}
+                <div>Ladies Hostel</div>
+                <div className={tabSelected=="LH"?'h-1 w-12/12 self-center bg-stone-800 rounded-full':''}/>
+              </div>
           </div>
 
           {/* <div className='text-sm mb-2'>Showing 1-8 out of 200 results</div> */}

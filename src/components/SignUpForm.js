@@ -11,6 +11,7 @@ function SignUpForm({filledDetails}) {
       console.log("filleddetails",filledDetails)
       axios.post(`${baseUrl}/studentsignup`,{batchId:filledDetails[0],email:filledDetails[1],name:filledDetails[2],admissionNo:filledDetails[3],phoneNo:phoneNo,password:password,address:address})
       .then(res=>console.log(res))
+    
     }
     return (
       <div className="flex flex-col w-5/12 bg-white text-left p-10 rounded-xl">

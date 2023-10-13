@@ -60,7 +60,8 @@ function FacultySignUpForm() {
                 {/* <p className="text-gray-500">Should contain atleast 8 characters</p> */}
             </div>
             <div className="flex items-center justify-center mt-4">
-                <button type="submit" className="rounded-xl text-white py-2 px-4 w-3/6 bg-stone-800">Sign Up</button>
+                <button type="submit" className="rounded-xl text-white py-2 px-4 w-3/6 bg-stone-800">
+                  <Link to = "/">Sign Up</Link></button>
             </div>
             <div className="mt-4 flex">
                     <p className="mr-2">Already have an account?</p><Link to="/login">Log In</Link>

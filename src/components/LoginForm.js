@@ -78,7 +78,7 @@ function LoginForm() {
                     </Link>
                 </div>
                 <div className="mt-4 flex">
-                    <p className="mr-2">Create new account?</p><Link to="/signup">Sign Up</Link>
+                    <p className="mr-2">Create new account?</p><Link to="/facultysignup">Sign Up</Link>
                 </div>
             </form>
         </div>

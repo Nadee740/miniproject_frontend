@@ -27,6 +27,7 @@ import InmateHome from './pages/Inmate/InmateHome';
 import CertificatePage from './pages/Inmate/CertificatePage';
 import MessPage from './pages/Inmate/MessPage';
 import MessSecretary from './pages/Inmate/MessSecretary'
+import Nodue from './pages/Inmate/Nodue'
 import MessDirector from './pages/Inmate/MessDirector'
 import HostelPage from './pages/Inmate/HostelPage';
 import { useEffect, useState } from 'react';
@@ -90,29 +91,42 @@ function App() {
     //         is_admin: true,
     //         roles: [ 'admin','HOD','WD','SA' ]
     //       }
+          
     // )
-    setAuthenticating(true)
-    setLoading(true)
-    console.log("Im inside useffect isauthenticated")
-    axios.get('http://localhost:8080/auth/isAuthenticated',{
-        withCredentials: true
-    })
-    .then(function (response) {
+    setUser(
+      {designation: "student",
+          email: "nadeemblayparambil@gmail.com",
+          is_admin:false,
+          mobile_no: "+917736070884",
+          name: "student1",
+          password: "$2a$10$PO8QaMy8ZeuSvRFvr9b20eNymwwloSCcBDTAf6gDyRnt9kSU9mkCq",
+          roles:  ['ms', 'md'],
+          stage: "inmate",
+          hostel: 'LH',
+          user_id: "4"}
+    )
+    // setAuthenticating(true)
+    // setLoading(true)
+    // console.log("Im inside useffect isauthenticated")
+    // axios.get('http://localhost:8080/auth/isAuthenticated',{
+    //     withCredentials: true
+    // })
+    // .then(function (response) {
 
-        setAuthenticating(false)
-        setLoading(false)
+    //     setAuthenticating(false)
+    //     setLoading(false)
 
-        console.log("success" , response ,"response.data");
-        if(response.data!="")
-          setUser(response.data)
-        else 
-          setUser(null)
-    })
-    .catch(function (error) {
-        setAuthenticating(false)
-        setLoading(false)
-        console.log("FAILED!!! ",error);
-    });
+    //     console.log("success" , response ,"response.data");
+    //     if(response.data!="")
+    //       setUser(response.data)
+    //     else 
+    //       setUser(null)
+    // })
+    // .catch(function (error) {
+    //     setAuthenticating(false)
+    //     setLoading(false)
+    //     console.log("FAILED!!! ",error);
+    // });
   }, [])
   
   return (
@@ -202,6 +216,7 @@ function App() {
             <Route index element={<MessPage/>}/>
             <Route path="mess" element={<MessPage/>}/>
             <Route path="certificates" element={<CertificatePage/>}/>
+            <Route path="certificates/nodue" element={<Nodue/>}/>
             <Route path="noninmatecertificate" element={<NonInmateCertificate/>}/>
             <Route path="messsec" element={<MessSecretary/>}/>
             <Route path="messdirector" element={<MessDirector/>}/>
@@ -213,6 +228,7 @@ function App() {
             <Route index element={<MessPage/>}/>
             <Route path="mess" element={<MessPage/>}/>
             <Route path="certificates" element={<CertificatePage/>}/>
+            <Route path="certificates/nodue" element={<Nodue/>}/>
             <Route path="noninmatecertificate" element={<NonInmateCertificate/>}/>
             <Route path="messsec" element={<MessSecretary/>}/>
             <Route path="messdirector" element={<MessDirector/>}/>
